@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,9 +24,10 @@ public class CustomerLoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         PrintWriter pw = res.getWriter();
         res.setContentType(BookStoreConstants.CONTENT_TYPE_TEXT_HTML);
-        String uName = req.getParameter(UsersDBConstants.COLUMN_EMAIL);
-        String pWord = req.getParameter(UsersDBConstants.COLUMN_PASSWORD);
-        User user = authService.login(UserRole.CUSTOMER, uName, pWord, req.getSession());
+        String email = req.getParameter(UsersDBConstants.COLUMN_EMAIL);
+        String password = req.getParameter(UsersDBConstants.COLUMN_PASSWORD);
+
+        User user = authService.login(UserRole.CUSTOMER, email, password, req.getSession());
 
         try {
 

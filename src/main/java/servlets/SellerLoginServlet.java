@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,10 +24,17 @@ public class SellerLoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         PrintWriter pw = res.getWriter();
         res.setContentType(BookStoreConstants.CONTENT_TYPE_TEXT_HTML);
-        String uName = req.getParameter(UsersDBConstants.COLUMN_EMAIL);
-        String pWord = req.getParameter(UsersDBConstants.COLUMN_PASSWORD);
+        Enumeration<String> parameterNames = req.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String paramName = parameterNames.nextElement();
+            System.out.println(paramName + ":6666 " + req.getParameter(paramName));
+        }
+        String email = req.getParameter(UsersDBConstants.COLUMN_EMAIL);
+        String password = req.getParameter(UsersDBConstants.COLUMN_PASSWORD);
+        System.out.println(email);
+        System.out.println(password);
         try {
-            User user = userService.login(UserRole.SELLER, uName, pWord, req.getSession());
+            User user = userService.login(UserRole.SELLER, email, password, req.getSession());
             if (user != null) {
                 RequestDispatcher rd = req.getRequestDispatcher("SellerHome.html");
 

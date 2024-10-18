@@ -30,8 +30,13 @@ public class UserServiceImpl implements UserService {
         Connection con = DBUtil.getConnection();
         PreparedStatement ps;
         User user = null;
+        System.out.println(email);
+        System.out.println(password);
+        System.out.println(role);
+
         try {
             String userType = UserRole.SELLER.equals(role) ? "1" : "2";
+            System.out.println(userType);
             ps = con.prepareStatement(loginUserQuery);
             ps.setString(1, email);
             ps.setString(2, password);
@@ -72,6 +77,7 @@ public class UserServiceImpl implements UserService {
         String responseMessage = ResponseCode.FAILURE.name();
         Connection con = DBUtil.getConnection();
         try {
+            System.out.println(user);
             PreparedStatement ps = con.prepareStatement(registerUserQuery);
             Random random = new Random();
             int randomId = random.nextInt(Integer.MAX_VALUE);
