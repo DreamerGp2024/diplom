@@ -30,14 +30,15 @@ public class CustomerRegisterServlet extends HttpServlet {
         String lName = req.getParameter(UsersDBConstants.COLUMN_LASTNAME);
         String addr = req.getParameter(UsersDBConstants.COLUMN_ADDRESS);
         String phNo = req.getParameter(UsersDBConstants.COLUMN_PHONE);
-        String mailId = req.getParameter(UsersDBConstants.COLUMN_MAILID);
+        String email = req.getParameter(UsersDBConstants.COLUMN_EMAIL);
         User user = new User();
-        user.setEmailId(mailId);
+        user.setEmailId(email);
         user.setFirstName(fName);
         user.setLastName(lName);
         user.setPassword(pWord);
-        user.setPhone(Long.parseLong(phNo));
+        user.setPhone(phNo);
         user.setAddress(addr);
+        System.out.println(user);
         try {
             String respCode = userService.register(UserRole.CUSTOMER, user);
             System.out.println(respCode);

@@ -19,11 +19,11 @@ import com.DreamerGp2024.util.DBUtil;
 public class UserServiceImpl implements UserService {
 
     private static final String registerUserQuery = "INSERT INTO " + UsersDBConstants.TABLE_USERS
-            + "  VALUES(?,?,?,?,?,?,?,?,?)";
+            + "  VALUES(?,?,?,?,?,?,?,?)";
 
     private static final String loginUserQuery = "SELECT * FROM " + UsersDBConstants.TABLE_USERS + " WHERE "
-            + UsersDBConstants.COLUMN_USERNAME + "=? AND " + UsersDBConstants.COLUMN_PASSWORD + "=? AND "
-            + UsersDBConstants.COLUMN_USERTYPE + "=?";
+            + UsersDBConstants.COLUMN_EMAIL + "=? AND " + UsersDBConstants.COLUMN_PASSWORD + "=? AND "
+            + UsersDBConstants.COLUMN_ROLE + "=?";
 
     @Override
     public User login(UserRole role, String email, String password, HttpSession session) throws StoreException {
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
                 user = new User();
                 user.setFirstName(rs.getString("firstName"));
                 user.setLastName(rs.getString("lastName"));
-                user.setPhone(rs.getLong("phone"));
+                user.setPhone(rs.getString("phone"));
                 user.setEmailId(email);
                 user.setPassword(password);
                 session.setAttribute(role.toString(), user.getEmailId());
@@ -73,18 +73,18 @@ public class UserServiceImpl implements UserService {
         Connection con = DBUtil.getConnection();
         try {
             PreparedStatement ps = con.prepareStatement(registerUserQuery);
-            ps.setString(1, user.getEmailId());
-            ps.setString(2, user.getPassword());
-            ps.setString(3, user.getFirstName());
-            ps.setString(4, user.getLastName());
-            ps.setString(5, user.getAddress());
-            ps.setLong(6, user.getPhone());
-            ps.setString(7, user.getEmailId());
-            int userType = UserRole.SELLER.equals(role) ? 1 : 2;
-            ps.setInt(8, userType);
             Random random = new Random();
             int randomId = random.nextInt(Integer.MAX_VALUE);
-            ps.setInt(9, randomId);
+            ps.setInt(1, randomId);
+            ps.setString(2, user.getEmailId());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getFirstName());
+            ps.setString(5, user.getLastName());
+            ps.setString(6, user.getPhone());
+            ps.setString(7, user.getAddress());
+            int userType = UserRole.SELLER.equals(role) ? 1 : 2;
+            ps.setInt(8, userType);
+
             int k = ps.executeUpdate();
             if (k == 1) {
                 responseMessage = ResponseCode.SUCCESS.name();

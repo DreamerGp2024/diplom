@@ -23,7 +23,7 @@ public class SellerLoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         PrintWriter pw = res.getWriter();
         res.setContentType(BookStoreConstants.CONTENT_TYPE_TEXT_HTML);
-        String uName = req.getParameter(UsersDBConstants.COLUMN_USERNAME);
+        String uName = req.getParameter(UsersDBConstants.COLUMN_EMAIL);
         String pWord = req.getParameter(UsersDBConstants.COLUMN_PASSWORD);
         try {
             User user = userService.login(UserRole.SELLER, uName, pWord, req.getSession());

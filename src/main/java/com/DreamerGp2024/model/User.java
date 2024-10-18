@@ -10,7 +10,7 @@ public class User implements Serializable {
     private String password;
     private String firstName;
     private String lastName;
-    private Long phone;
+    private String phone;
     private String address;
     private List<UserRole> roles;
 
@@ -46,11 +46,11 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -76,6 +76,20 @@ public class User implements Serializable {
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", emailId='" + emailId + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 
 //    public static User retrieveFromHttpServletRequest(HttpServletRequest req) {
