@@ -61,7 +61,7 @@ public class ErrorHandlerServlet extends HttpServlet {
             StoreUtil.setActiveTab(pw, "home");
             showErrorMessage(pw, errorCode, errorMessage);
 
-        } else if (StoreUtil.isLoggedIn(UserRole.SELLER, req.getSession())) {
+        } else if (StoreUtil.isLoggedIn(UserRole.MANAGER, req.getSession())) {
             RequestDispatcher rd = req.getRequestDispatcher("SellerHome.html");
             rd.include(req, res);
             StoreUtil.setActiveTab(pw, "home");

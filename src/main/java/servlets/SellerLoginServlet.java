@@ -34,7 +34,7 @@ public class SellerLoginServlet extends HttpServlet {
         System.out.println(email);
         System.out.println(password);
         try {
-            User user = userService.login(UserRole.SELLER, email, password, req.getSession());
+            User user = userService.login(UserRole.MANAGER, email, password, req.getSession());
             if (user != null) {
                 RequestDispatcher rd = req.getRequestDispatcher("SellerHome.html");
 

@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         System.out.println(role);
 
         try {
-            String userType = UserRole.SELLER.equals(role) ? "1" : "2";
+            String userType = UserRole.MANAGER.equals(role) ? "1" : "2";
             System.out.println(userType);
             ps = con.prepareStatement(loginUserQuery);
             ps.setString(1, email);
@@ -47,9 +47,9 @@ public class UserServiceImpl implements UserService {
                 user.setFirstName(rs.getString("firstName"));
                 user.setLastName(rs.getString("lastName"));
                 user.setPhone(rs.getString("phone"));
-                user.setEmailId(email);
-                user.setPassword(password);
-                session.setAttribute(role.toString(), user.getEmailId());
+                user.setEmail(email);
+                user.setPasswordUser(password);
+                session.setAttribute(role.toString(), user.getEmail());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean logout(HttpSession session) {
         session.removeAttribute(UserRole.CUSTOMER.toString());
-        session.removeAttribute(UserRole.SELLER.toString());
+        session.removeAttribute(UserRole.MANAGER.toString());
         session.invalidate();
         return true;
     }
@@ -82,13 +82,13 @@ public class UserServiceImpl implements UserService {
             Random random = new Random();
             int randomId = random.nextInt(Integer.MAX_VALUE);
             ps.setInt(1, randomId);
-            ps.setString(2, user.getEmailId());
-            ps.setString(3, user.getPassword());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPasswordUser());
             ps.setString(4, user.getFirstName());
             ps.setString(5, user.getLastName());
             ps.setString(6, user.getPhone());
             ps.setString(7, user.getAddress());
-            int userType = UserRole.SELLER.equals(role) ? 1 : 2;
+            int userType = UserRole.MANAGER.equals(role) ? 1 : 2;
             ps.setInt(8, userType);
 
             int k = ps.executeUpdate();

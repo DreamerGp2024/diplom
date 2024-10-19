@@ -1,9 +1,7 @@
 package com.DreamerGp2024.constant.db;
 
 public interface UsersDBConstants {
-
 	public static String TABLE_USERS = "users";
-	
 	public static String COLUMN_USERID = "userID";
 	public static String COLUMN_EMAIL = "email";
 	public static String COLUMN_PASSWORD = "passwordUser";

@@ -24,9 +24,9 @@ public class StoreException extends IOException {
         this.setErrorCode(errorCodes.name());
     }
 
-    public StoreException(String errroCode, String errorMessage) {
+    public StoreException(String errorCode, String errorMessage) {
         super(errorMessage);
-        this.errorCode = errroCode;
+        this.errorCode = errorCode;
         this.errorMessage = errorMessage;
         this.statusCode = 422;
     }

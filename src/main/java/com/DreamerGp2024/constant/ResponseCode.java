@@ -11,8 +11,7 @@ public enum ResponseCode {
     ACCESS_DENIED(403, "Please Login First to continue"),
     BAD_REQUEST(400, "Bad Request, Please Try Again"),
     INTERNAL_SERVER_ERROR(500, "Internal Server Error, Try Again!!"),
-    DATABASE_CONNECTION_FAILURE(406,
-            "Unable to Connect to DB, Please Check your db credentials in application.properties"),
+    DATABASE_CONNECTION_FAILURE(406,"Unable to Connect to DB, Please Check your db credentials in application.properties"),
     METHOD_NOT_ALLOWED(405, "Requested HTTP method is not supported by this URL"),
 
     ;

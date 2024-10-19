@@ -16,20 +16,20 @@ import com.DreamerGp2024.util.DBUtil;
 
 public class BookServiceImpl implements BookService {
 
-    private static final String getAllBooksQuery = "SELECT * FROM " + BooksDBConstants.TABLE_BOOK;
-    private static final String getBookByIdQuery = "SELECT * FROM " + BooksDBConstants.TABLE_BOOK
+    private static final String getAllBooksQuery = "SELECT * FROM " + BooksDBConstants.TABLE_BOOKS;
+    private static final String getBookByIdQuery = "SELECT * FROM " + BooksDBConstants.TABLE_BOOKS
             + " WHERE " + BooksDBConstants.COLUMN_BARCODE + " = ?";
 
-    private static final String deleteBookByIdQuery = "DELETE FROM " + BooksDBConstants.TABLE_BOOK + "  WHERE "
+    private static final String deleteBookByIdQuery = "DELETE FROM " + BooksDBConstants.TABLE_BOOKS + "  WHERE "
             + BooksDBConstants.COLUMN_BARCODE + "=?";
 
-    private static final String addBookQuery = "INSERT INTO " + BooksDBConstants.TABLE_BOOK + "  VALUES(?,?,?,?,?)";
+    private static final String addBookQuery = "INSERT INTO " + BooksDBConstants.TABLE_BOOKS + "  VALUES(?,?,?,?,?)";
 
-    private static final String updateBookQtyByIdQuery = "UPDATE " + BooksDBConstants.TABLE_BOOK + " SET "
+    private static final String updateBookQtyByIdQuery = "UPDATE " + BooksDBConstants.TABLE_BOOKS + " SET "
             + BooksDBConstants.COLUMN_QUANTITY + "=? WHERE " + BooksDBConstants.COLUMN_BARCODE
             + "=?";
 
-    private static final String updateBookByIdQuery = "UPDATE " + BooksDBConstants.TABLE_BOOK + " SET "
+    private static final String updateBookByIdQuery = "UPDATE " + BooksDBConstants.TABLE_BOOKS + " SET "
             + BooksDBConstants.COLUMN_NAME + "=? , "
             + BooksDBConstants.COLUMN_AUTHOR + "=?, "
             + BooksDBConstants.COLUMN_PRICE + "=?, "
@@ -148,7 +148,7 @@ public class BookServiceImpl implements BookService {
         List<Book> books = new ArrayList<Book>();
         Connection con = DBUtil.getConnection();
         try {
-            String getBooksByCommaSeperatedBookIdsQuery = "SELECT * FROM " + BooksDBConstants.TABLE_BOOK
+            String getBooksByCommaSeperatedBookIdsQuery = "SELECT * FROM " + BooksDBConstants.TABLE_BOOKS
                     + " WHERE " +
                     BooksDBConstants.COLUMN_BARCODE + " IN ( " + commaSeperatedBookIds + " )";
             PreparedStatement ps = con.prepareStatement(getBooksByCommaSeperatedBookIdsQuery);

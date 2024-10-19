@@ -2,7 +2,6 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,10 +32,10 @@ public class CustomerRegisterServlet extends HttpServlet {
         String phNo = req.getParameter(UsersDBConstants.COLUMN_PHONE);
         String email = req.getParameter(UsersDBConstants.COLUMN_EMAIL);
         User user = new User();
-        user.setEmailId(email);
+        user.setEmail(email);
         user.setFirstName(fName);
         user.setLastName(lName);
-        user.setPassword(pWord);
+        user.setPasswordUser(pWord);
         user.setPhone(phNo);
         user.setAddress(addr);
         System.out.println(user);
