@@ -63,7 +63,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getAllBooks() throws StoreException {
-        List<Book> books = new ArrayList<Book>();
+        List<Book> books = new ArrayList<>();
         Connection con = DBUtil.getConnection();
 
         try {

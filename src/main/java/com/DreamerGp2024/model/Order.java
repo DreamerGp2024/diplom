@@ -12,9 +12,9 @@ public class Order implements Serializable {
     private int quantity;
     private double total;
     private int manager;
-    private List<OrderStatus> status;
+    private OrderStatus status;
 
-    public Order(int orderID, int customer, String barcode, double price, int quantity, double total, int manager,List<OrderStatus> status) {
+    public Order(int orderID, int customer, String barcode, double price, int quantity, double total, int manager,OrderStatus status) {
         this.orderID = orderID;
         this.customer = customer;
         this.barcode = barcode;
@@ -57,11 +57,11 @@ public class Order implements Serializable {
         this.manager = manager;
     }
 
-    public List<OrderStatus> getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(List<OrderStatus> status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
