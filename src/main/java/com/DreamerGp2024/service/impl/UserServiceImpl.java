@@ -16,6 +16,8 @@ import com.DreamerGp2024.model.UserRole;
 import com.DreamerGp2024.service.UserService;
 import com.DreamerGp2024.util.DBUtil;
 
+import static com.DreamerGp2024.constant.db.UsersDBConstants.*;
+
 public class UserServiceImpl implements UserService {
 
     private static final String registerUserQuery = "INSERT INTO " + UsersDBConstants.TABLE_USERS
@@ -30,13 +32,9 @@ public class UserServiceImpl implements UserService {
         Connection con = DBUtil.getConnection();
         PreparedStatement ps;
         User user = null;
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(role);
 
         try {
             String userType = UserRole.MANAGER.equals(role) ? "1" : "2";
-            System.out.println(userType);
             ps = con.prepareStatement(loginUserQuery);
             ps.setString(1, email);
             ps.setString(2, password);
@@ -44,12 +42,14 @@ public class UserServiceImpl implements UserService {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 user = new User();
-                user.setFirstName(rs.getString("firstName"));
-                user.setLastName(rs.getString("lastName"));
-                user.setPhone(rs.getString("phone"));
+                user.setFirstName(rs.getString(COLUMN_FIRSTNAME));
+                user.setLastName(rs.getString(COLUMN_LASTNAME));
+                user.setPhone(rs.getString(COLUMN_PHONE));
                 user.setEmail(email);
                 user.setPasswordUser(password);
+                user.setUserID(rs.getInt(COLUMN_USERID));
                 session.setAttribute(role.toString(), user.getEmail());
+                session.setAttribute("userID", user.getUserID());
             }
         } catch (SQLException e) {
             e.printStackTrace();

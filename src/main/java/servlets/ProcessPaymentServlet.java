@@ -1,8 +1,11 @@
 package servlets;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import com.DreamerGp2024.constant.BookStoreConstants;
+import com.DreamerGp2024.model.*;
+import com.DreamerGp2024.service.BookService;
+import com.DreamerGp2024.service.impl.BookServiceImpl;
+import com.DreamerGp2024.service.impl.OrderServiceImpl;
+import com.DreamerGp2024.util.StoreUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,14 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.DreamerGp2024.constant.BookStoreConstants;
-import com.DreamerGp2024.model.Book;
-import com.DreamerGp2024.model.Cart;
-import com.DreamerGp2024.model.UserRole;
-import com.DreamerGp2024.service.BookService;
-import com.DreamerGp2024.service.impl.BookServiceImpl;
-import com.DreamerGp2024.util.StoreUtil;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Random;
 
 public class ProcessPaymentServlet extends HttpServlet {
 
@@ -34,7 +33,7 @@ public class ProcessPaymentServlet extends HttpServlet {
             return;
         }
         try {
-
+            OrderServiceImpl orderService = new OrderServiceImpl();
             RequestDispatcher rd = req.getRequestDispatcher("CustomerHome.html");
             rd.include(req, res);
             StoreUtil.setActiveTab(pw, "cart");
@@ -43,9 +42,23 @@ public class ProcessPaymentServlet extends HttpServlet {
                     + "        <div class=\"card-columns\">");
             HttpSession session = req.getSession();
             List<Cart> cartItems = null;
-            if (session.getAttribute("cartItems") != null)
+            if (session.getAttribute("cartItems") != null) {
                 cartItems = (List<Cart>) session.getAttribute("cartItems");
+            }
+            Random random = new Random();
+            int orderID = random.nextInt(Integer.MAX_VALUE);
             for (Cart cart : cartItems) {
+                Order order = new Order(
+                        orderID,
+                        (Integer) req.getSession().getAttribute("userID"),
+                        cart.getBook().getBarcode(),
+                        cart.getBook().getPrice(),
+                        cart.getQuantity(),
+                        cart.getBook().getPrice() * cart.getBook().getQuantity(),
+                        0,
+                        OrderStatus.NEW
+                );
+                orderService.addOrder(order);
                 Book book = cart.getBook();
                 double bPrice = book.getPrice();
                 String bCode = book.getBarcode();
