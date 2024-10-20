@@ -1,7 +1,6 @@
 package com.DreamerGp2024.service.impl;
 
 import com.DreamerGp2024.constant.ResponseCode;
-import com.DreamerGp2024.constant.db.OrdersDBConstants;
 import com.DreamerGp2024.model.Order;
 import com.DreamerGp2024.model.OrderStatus;
 import com.DreamerGp2024.model.StoreException;
@@ -14,6 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.DreamerGp2024.constant.db.OrdersDBConstants.*;
+
 
 public class OrderServiceImpl implements OrderService {
 
@@ -28,16 +30,16 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private static final String getOrderByIdQuery = "SELECT * FROM " + OrdersDBConstants.TABLE_ORDERS
-            + " WHERE " + OrdersDBConstants.COLUMN_ORDERID + " = ?";
+    private static final String getOrderByIdQuery = "SELECT * FROM " + TABLE_ORDERS
+            + " WHERE " + COLUMN_ORDERID + " = ?";
 
-    private static final String getOrdersQuery = "SELECT * FROM " + OrdersDBConstants.TABLE_ORDERS;
+    private static final String getOrdersQuery = "SELECT * FROM " + TABLE_ORDERS;
 
-    private static final String addOrdersQuery = "INSERT INTO " + OrdersDBConstants.TABLE_ORDERS + "  VALUES(?,?,?,?,?,?,?,?)";
+    private static final String addOrdersQuery = "INSERT INTO " + TABLE_ORDERS + "  VALUES(?,?,?,?,?,?,?,?)";
 
-    private static final String updateOrderStatusByIdQuery = "UPDATE " + OrdersDBConstants.TABLE_ORDERS + " SET "
-            + OrdersDBConstants.COLUMN_STATUS + "=? "
-            + "  WHERE " + OrdersDBConstants.COLUMN_ORDERID
+    private static final String updateOrderStatusByIdQuery = "UPDATE " + TABLE_ORDERS + " SET "
+            + COLUMN_STATUS + "=? "
+            + "  WHERE " + COLUMN_ORDERID
             + "=?";
 
     @Override
