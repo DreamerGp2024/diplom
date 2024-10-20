@@ -1,5 +1,6 @@
 package com.DreamerGp2024.service.impl;
 
+import com.DreamerGp2024.constant.ResponseCode;
 import com.DreamerGp2024.constant.db.OrdersDBConstants;
 import com.DreamerGp2024.model.Order;
 import com.DreamerGp2024.model.OrderStatus;
@@ -31,6 +32,13 @@ public class OrderServiceImpl implements OrderService {
             + " WHERE " + OrdersDBConstants.COLUMN_ORDERID + " = ?";
 
     private static final String getOrdersQuery = "SELECT * FROM " + OrdersDBConstants.TABLE_ORDERS;
+
+    private static final String addOrdersQuery = "INSERT INTO " + OrdersDBConstants.TABLE_ORDERS + "  VALUES(?,?,?,?,?,?,?,?)";
+
+    private static final String updateOrderStatusByIdQuery = "UPDATE " + OrdersDBConstants.TABLE_ORDERS + " SET "
+            + OrdersDBConstants.COLUMN_STATUS + "=? "
+            + "  WHERE " + OrdersDBConstants.COLUMN_ORDERID
+            + "=?";
 
     @Override
     public Order getOrderById(String orderID) throws StoreException {
@@ -86,12 +94,43 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public String finishOrderById(String orderID) throws StoreException {
-        return "";
+    public String changeOrderStatusByID(String orderID, OrderStatus status) throws StoreException {
+        String responseCode = ResponseCode.FAILURE.name();
+        Connection con = DBUtil.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(updateOrderStatusByIdQuery);
+            ps.setString(1, status.name());
+            ps.setString(2, orderID);
+            ps.executeUpdate();
+            responseCode = ResponseCode.SUCCESS.name();
+        } catch (Exception e) {
+            responseCode += " : " + e.getMessage();
+            e.printStackTrace();
+        }
+        return responseCode;
     }
 
     @Override
     public String addOrder(Order order) throws StoreException {
-        return "";
+        String responseCode = ResponseCode.FAILURE.name();
+        Connection con = DBUtil.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(addOrdersQuery);
+            ps.setInt(1, order.getOrderID());
+            ps.setInt(2, order.getCustomer());
+            ps.setString(3, order.getBarcode());
+            ps.setDouble(4, order.getPrice());
+            ps.setInt(5, order.getQuantity());
+            ps.setDouble(6, order.getTotal());
+            ps.setInt(7, order.getManager());
+            ps.setString(8, order.getStatus().name());
+            if (ps.executeUpdate() == 1) {
+                responseCode = ResponseCode.SUCCESS.name();
+            }
+        } catch (Exception e) {
+            responseCode += " : " + e.getMessage();
+            e.printStackTrace();
+        }
+        return responseCode;
     }
 }
