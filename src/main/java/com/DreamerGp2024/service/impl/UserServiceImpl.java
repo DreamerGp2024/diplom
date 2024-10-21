@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.DreamerGp2024.constant.ResponseCode;
 import com.DreamerGp2024.constant.db.UsersDBConstants;
+import com.DreamerGp2024.model.Book;
 import com.DreamerGp2024.model.StoreException;
 import com.DreamerGp2024.model.User;
 import com.DreamerGp2024.model.UserRole;
@@ -26,6 +27,9 @@ public class UserServiceImpl implements UserService {
     private static final String loginUserQuery = "SELECT * FROM " + UsersDBConstants.TABLE_USERS + " WHERE "
             + UsersDBConstants.COLUMN_EMAIL + "=? AND " + UsersDBConstants.COLUMN_PASSWORD + "=? AND "
             + UsersDBConstants.COLUMN_ROLE + "=?";
+
+    private static final String getUserNameByUserIDQuery = "SELECT * FROM " + UsersDBConstants.TABLE_USERS + " WHERE "
+            + COLUMN_USERID + "=?";
 
     @Override
     public User login(UserRole role, String email, String password, HttpSession session) throws StoreException {
@@ -102,6 +106,24 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return responseMessage;
+    }
+
+    @Override
+    public String getNameByUserID(int userID) throws StoreException {
+        String phone = null;
+        Connection con = DBUtil.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(getUserNameByUserIDQuery);
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                phone = rs.getString(COLUMN_PHONE);
+            }
+        } catch (SQLException e) {
+
+        }
+        return phone;
     }
 
 }

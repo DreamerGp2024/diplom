@@ -122,6 +122,14 @@
 		<servlet-name>ProcessPaymentServlet</servlet-name>
 		<url-pattern>/pay</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>OrderServlet</servlet-name>
+		<servlet-class>servlets.OrderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderServlet</servlet-name>
+		<url-pattern>/orders</url-pattern>
+	</servlet-mapping>
 
 	<!-- Error Handlers -->
 	<servlet>

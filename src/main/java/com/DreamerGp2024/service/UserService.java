@@ -16,4 +16,5 @@ public interface UserService {
 
     public boolean logout(HttpSession session);
 
+    public String getNameByUserID(int userID) throws StoreException;
 }
