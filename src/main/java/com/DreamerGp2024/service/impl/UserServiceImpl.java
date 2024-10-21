@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
         Connection con = DBUtil.getConnection();
         PreparedStatement ps;
         User user = null;
-
+        System.out.println(email);
         try {
             String userType = UserRole.MANAGER.equals(role) ? "1" : "2";
             ps = con.prepareStatement(loginUserQuery);
