@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -48,12 +49,16 @@ public class ProcessPaymentServlet extends HttpServlet {
             Random random = new Random();
             int orderID = random.nextInt(Integer.MAX_VALUE);
             for (Cart cart : cartItems) {
+                ArrayList<String> list = new ArrayList<>();
+                list.add(cart.getBook().getBarcode());
+                ArrayList<Integer> list1 = new ArrayList<>();
+                list1.add(cart.getQuantity());
                 Order order = new Order(
                         orderID,
                         (Integer) req.getSession().getAttribute("userID"),
-                        cart.getBook().getBarcode(),
+                        list,
                         cart.getBook().getPrice(),
-                        cart.getQuantity(),
+                        list1,
                         cart.getBook().getPrice() * cart.getBook().getQuantity(),
                         0,
                         OrderStatus.NEW

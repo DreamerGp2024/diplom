@@ -1,6 +1,5 @@
 package servlets;
 
-import com.DreamerGp2024.model.Book;
 import com.DreamerGp2024.model.Order;
 import com.DreamerGp2024.model.StoreException;
 import com.DreamerGp2024.model.UserRole;
@@ -15,7 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class OrderServlet extends HttpServlet {
 
@@ -41,6 +43,39 @@ public class OrderServlet extends HttpServlet {
             StoreUtil.setActiveTab(pw, "orders");
 
             List<Order> orders = orderService.getOrders();
+            List<Order> realOrders = new ArrayList<>();
+            Set<Integer> orderIDs = new HashSet<>();
+            for (Order order : orders) {
+                orderIDs.add(order.getOrderID());
+            }
+            for (Integer orderID : orderIDs) {
+                List<String> barcodes = new ArrayList<>();
+                List<Integer> qtys = new ArrayList<>();
+                double price = 0.0;
+                for (Order order : orders) {
+                    if (order.getOrderID() == orderID) {
+                        barcodes.add(order.getBarcode().get(0));
+                        qtys.add(order.getQuantity().get(0));
+                        price += order.getTotal();
+                    }
+                }
+                for (Order order : orders) {
+                    if (order.getOrderID() == orderID) {
+                        realOrders.add(new Order(
+                                order.getOrderID(),
+                                order.getCustomer(),
+                                barcodes,
+                                order.getPrice(),
+                                qtys,
+                                price,
+                                order.getManager(),
+                                order.getStatus()
+                        ));
+                        break;
+                    }
+                }
+            }
+
             pw.println("<div id='topmid' style='background-color:grey'>Orders</div>");
             pw.println("<table class=\"table table-hover\" style='background-color:white'>\r\n"
                     + "  <thead>\r\n"
@@ -60,7 +95,7 @@ public class OrderServlet extends HttpServlet {
                         + "      <th scope=\"row\" colspan='6' style='color:yellow; text-align:center;'> No Active Orders in the store </th>\r\n"
                         + "    </tr>\r\n");
             }
-            for (Order order : orders) {
+            for (Order order : realOrders) {
                 pw.println(getRowData(order));
             }
 
@@ -73,14 +108,16 @@ public class OrderServlet extends HttpServlet {
     }
 
     public String getRowData(Order order) {
+        String books = "";
+        for (int i = 0; i < order.getBarcode().size(); i++) {
+            books += order.getBarcode().get(i) + " - " + order.getQuantity().get(i) + "pcs.<br>";
+        }
         try {
-            String books;
-//        for(Book book: order.getBarcode())
             return "    <tr>\r\n"
                     + "      <th scope=\"row\">" + order.getOrderID() + "</th>\r\n"
                     + "      <td>" + order.getStatus().name() + "</td>\r\n"
                     + "      <td>" + userService.getNameByUserID(order.getCustomer()) + "</td>\r\n"
-                    + "      <td>" + order.getBarcode() + "</td>\r\n"
+                    + "      <td>" + books + "</td>\r\n"
                     + "      <td>" + order.getPrice() + "</td>\r\n"
                     + "      <td>" + userService.getNameByUserID(order.getManager()) + "</td>\r\n"
                     + "      <td><form method='post' action='updatebook'>"
@@ -88,8 +125,7 @@ public class OrderServlet extends HttpServlet {
                     + "          <button type='submit' class=\"btn btn-success\">Update</button>"
                     + "          </form>"
                     + "    </tr>\r\n";
-        }
-        catch (StoreException ignored) {
+        } catch (StoreException ignored) {
 
         }
         return "";

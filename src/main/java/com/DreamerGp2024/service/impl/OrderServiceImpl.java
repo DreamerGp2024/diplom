@@ -52,12 +52,16 @@ public class OrderServiceImpl implements OrderService {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                ArrayList<String> list = new ArrayList<>();
+                list.add(rs.getString(3));
+                ArrayList<Integer> list1 = new ArrayList<>();
+                list1.add(rs.getInt(5));
                 order = new Order(
                         rs.getInt(1),
                         rs.getInt(2),
-                        rs.getString(3),
+                        list,
                         rs.getDouble(4),
-                        rs.getInt(5),
+                        list1,
                         rs.getDouble(6),
                         rs.getInt(7),
                         getStatusByString(rs.getString(8))
@@ -78,12 +82,16 @@ public class OrderServiceImpl implements OrderService {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                ArrayList<String> list = new ArrayList<>();
+                list.add(rs.getString(3));
+                ArrayList<Integer> list1 = new ArrayList<>();
+                list1.add(rs.getInt(5));
                 orders.add(new Order(
                         rs.getInt(1),
                         rs.getInt(2),
-                        rs.getString(3),
+                        list,
                         rs.getDouble(4),
-                        rs.getInt(5),
+                        list1,
                         rs.getDouble(6),
                         rs.getInt(7),
                         getStatusByString(rs.getString(8))
@@ -120,9 +128,9 @@ public class OrderServiceImpl implements OrderService {
             PreparedStatement ps = con.prepareStatement(addOrdersQuery);
             ps.setInt(1, order.getOrderID());
             ps.setInt(2, order.getCustomer());
-            ps.setString(3, order.getBarcode());
+            ps.setString(3, order.getBarcode().get(0));
             ps.setDouble(4, order.getPrice());
-            ps.setInt(5, order.getQuantity());
+            ps.setInt(5, order.getQuantity().get(0));
             ps.setDouble(6, order.getTotal());
             ps.setInt(7, order.getManager());
             ps.setString(8, order.getStatus().name());

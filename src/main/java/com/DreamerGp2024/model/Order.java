@@ -7,14 +7,14 @@ public class Order implements Serializable {
 
     private int orderID;
     private int customer;
-    private String barcode;
+    private List<String> barcode;
     private double price;
-    private int quantity;
+    private List<Integer> quantity;
     private double total;
     private int manager;
     private OrderStatus status;
 
-    public Order(int orderID, int customer, String barcode, double price, int quantity, double total, int manager,OrderStatus status) {
+    public Order(int orderID, int customer, List<String> barcode, double price, List<Integer> quantity, double total, int manager,OrderStatus status) {
         this.orderID = orderID;
         this.customer = customer;
         this.barcode = barcode;
@@ -69,11 +69,11 @@ public class Order implements Serializable {
         super();
     }
 
-    public String getBarcode() {
+    public List<String> getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(String barcode) {
+    public void setBarcode(List<String> barcode) {
         this.barcode = barcode;
     }
 
@@ -85,11 +85,11 @@ public class Order implements Serializable {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public List<Integer> getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(List<Integer> quantity) {
         this.quantity = quantity;
     }
 }
