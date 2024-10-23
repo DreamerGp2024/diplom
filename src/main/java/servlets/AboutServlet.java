@@ -22,13 +22,13 @@ public class AboutServlet extends HttpServlet {
             RequestDispatcher rd = req.getRequestDispatcher("CustomerHome.html");
             rd.include(req, res);
             StoreUtil.setActiveTab(pw, "about");
-            pw.println("<table class=\"tab\"><tr><td></br>It is diplom project </br>Designed by Pozdeev Nikita<img src=\"diplom.jpg\" vspace=\"60\"></td></tr></table>");
+            pw.println("<table class=\"tab\"><tr><td></br>It is diplom project </br>Designed by Pozdeev Nikita</br><img src=\"diplom.jpg\" vspace=\"60\"></td></tr></table>");
 
         } else if (StoreUtil.isLoggedIn(UserRole.MANAGER, req.getSession())) {
             RequestDispatcher rd = req.getRequestDispatcher("SellerHome.html");
             rd.include(req, res);
             StoreUtil.setActiveTab(pw, "about");
-            pw.println("<table class=\"tab\"><tr><td></br>It is diplom project </br>Designed by Pozdeev Nikita<img src=\"diplom.jpg\" vspace=\"60\"></td></tr></table>");
+            pw.println("<table class=\"tab\"><tr><td></br>It is diplom project </br>Designed by Pozdeev Nikita</br><img src=\"diplom.jpg\" vspace=\"60\"></td></tr></table>");
 
         } else {
             //If the user is not logged in, ask to login first

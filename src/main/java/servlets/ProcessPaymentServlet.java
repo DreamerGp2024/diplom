@@ -110,7 +110,7 @@ public class ProcessPaymentServlet extends HttpServlet {
                 + "                    </div>\r\n"
                 + "                    <div class=\"col-sm-6\">\r\n"
                 + "                        <p class=\"card-text\">\r\n"
-                + "                        Amout Paid: <span style=\"font-weight:bold; color:green\"> &#8377; " + bPrice
+                + "                        Amout Paid: <span style=\"font-weight:bold; color:green\"> &#8364; " + bPrice
                 + " </span>\r\n"
                 + "                        </p>\r\n"
                 + button

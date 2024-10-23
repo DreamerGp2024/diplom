@@ -31,9 +31,7 @@ public class StoreUtil {
 
     }
 
-    /**
-     * Add/Remove/Update Item in the cart using the session
-     */
+
     public static void updateCartItems(HttpServletRequest req) {
         String selectedBookId = req.getParameter("selectedBookId");
         HttpSession session = req.getSession();
@@ -50,12 +48,7 @@ public class StoreUtil {
                 // set the items in the session to be used later
                 session.setAttribute("items", items);
 
-                /*
-                 * Quantity of each item in the cart will be stored in the session as:
-                 * Prefixed with qty_ following its bookId
-                 * For example 2 no. of book with id 'myBook' in the cart will be
-                 * added to the session as qty_myBook=2
-                 */
+
                 int itemQty = 0;
                 if (session.getAttribute("qty_" + selectedBookId) != null)
                     itemQty = (int) session.getAttribute("qty_" + selectedBookId);
@@ -77,6 +70,5 @@ public class StoreUtil {
                 }
             }
         }
-
     }
 }
