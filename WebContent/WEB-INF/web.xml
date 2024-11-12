@@ -130,6 +130,14 @@
 		<servlet-name>OrderServlet</servlet-name>
 		<url-pattern>/orders</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>BookDetailsServlet</servlet-name>
+		<servlet-class>servlets.BookDetailsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BookDetailsServlet</servlet-name>
+		<url-pattern>/bookDetailsServlet</url-pattern>
+	</servlet-mapping>
 
 	<!-- Error Handlers -->
 	<servlet>
