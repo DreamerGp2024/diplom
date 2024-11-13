@@ -85,10 +85,16 @@ public class StoreBookServlet extends HttpServlet {
                 + "      <td>"
                 + book.getQuantity()
                 + "      </td>\r\n"
-                + "      <td><form method='post' action='updatebook'>"
+                + "<td><div style='display: flex;\n; justify-content: flex-start;'>"
+                + "      <form method='post' action='updatebook'>"
                 + "          <input type='hidden' name='bookId' value='" + book.getBarcode() + "'/>"
-                + "          <button type='submit' class=\"btn btn-success\">Update</button>"
+                + "          <button type='submit' style='margin-right: 10px;' class=\"btn btn-success\">Edit</button>"
                 + "          </form>"
+                + "<form action=\"removebook\" method=\"post\">"
+                + "<input type='hidden' name='bookId' value='" + book.getBarcode() + "'/>"
+                + "<button type='submit' class=\"btn btn-danger\">Delete</button>"
+                + "</form>"
+                + "</div>"
                 + "    </tr>\r\n";
     }
 
