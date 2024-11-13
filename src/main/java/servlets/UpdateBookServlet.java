@@ -35,7 +35,7 @@ public class UpdateBookServlet extends HttpServlet {
         RequestDispatcher rd = req.getRequestDispatcher("SellerHome.html");
         rd.include(req, res);
         StoreUtil.setActiveTab(pw, "storebooks");
-        pw.println("<div class='container my-2'>");
+        pw.println("<div style=\"align-items: center;display: flex;justify-content: center;\">");
 
         try {
             if (req.getParameter("updateFormSubmitted") != null) {
@@ -72,25 +72,16 @@ public class UpdateBookServlet extends HttpServlet {
     }
 
     private static void showUpdateBookForm(PrintWriter pw, Book book) {
-        String form = "<table class=\"tab my-5\" style=\"width:40%;\">\r\n"
-                + "        <tr>\r\n"
-                + "            <td>\r\n"
-                + "                <form action=\"updatebook\" method=\"post\">\r\n"
-                + "                    <label for=\"bookCode\">Book Code : </label><input type=\"text\" name=\"barcode\" id=\"bookCode\" placeholder=\"Enter Book Code\" value='"
-                + book.getBarcode() + "' readonly><br/>"
-                + "                    <label for=\"bookName\">Book Name : </label> <input type=\"text\" name=\"name\" id=\"bookName\" placeholder=\"Enter Book's name\" value='"
-                + book.getName() + "' required><br/>\r\n"
-                + "                    <label for=\"bookAuthor\">Book Author : </label><input type=\"text\" name=\"author\" id=\"bookAuthor\" placeholder=\"Enter Author's Name\" value='"
-                + book.getAuthor() + "' required><br/>\r\n"
-                + "                    <label for=\"bookPrice\">Book Price : </label><input type=\"number\" name=\"price\" placeholder=\"Enter the Price\" value='"
-                + book.getPrice() + "' required><br/>\r\n"
-                + "                    <label for=\"bookQuantity\">Book Qnty : </label><input type=\"number\" name=\"quantity\" id=\"bookQuantity\" placeholder=\"Enter the quantity\" value='"
-                + book.getQuantity() + "' required><br/>\r\n"
-                + "                    <input class=\"btn btn-success my-2\" type=\"submit\" name='updateFormSubmitted' value=\" Update Book \">\r\n"
-                + "                </form>\r\n"
-                + "            </td>\r\n"
-                + "        </tr>  \r\n"
-                + "    </table>";
+        String form =  "<div class=\"form-container\">\r\n"
+            + "    <form action=\"updatebook\" method=\"post\">\r\n"
+            + "        <label for=\"bookCode\">Book Code : </label><input type=\"text\" name=\"barcode\" id=\"bookCode\" placeholder=\"Enter Book Code\" value='" + book.getBarcode() + "' readonly><br/>"
+            + "        <label for=\"bookName\">Book Name : </label> <input type=\"text\" name=\"name\" id=\"bookName\" placeholder=\"Enter Book's name\" value='" + book.getName() + "' required><br/>\r\n"
+            + "        <label for=\"bookAuthor\">Book Author : </label><input type=\"text\" name=\"author\" id=\"bookAuthor\" placeholder=\"Enter Author's Name\" value='" + book.getAuthor() + "' required><br/>\r\n"
+            + "        <label for=\"bookPrice\">Book Price : </label><input type=\"number\" name=\"price\" placeholder=\"Enter the Price\" value='" + book.getPrice() + "' required><br/>\r\n"
+            + "        <label for=\"bookQuantity\">Book Qnty : </label><input type=\"number\" name=\"quantity\" id=\"bookQuantity\" placeholder=\"Enter the quantity\" value='" + book.getQuantity() + "' required><br/>\r\n"
+            + "        <input class=\"btn btn-success my-2\" type=\"submit\" name='updateFormSubmitted' value=\" Update Book \">\r\n"
+            + "    </form>\r\n"
+            + "</div>";
         pw.println(form);
     }
 }
