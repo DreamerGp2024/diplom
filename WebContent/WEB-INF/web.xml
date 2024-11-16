@@ -138,6 +138,14 @@
 		<servlet-name>BookDetailsServlet</servlet-name>
 		<url-pattern>/bookDetailsServlet</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>NewsServlet</servlet-name>
+		<servlet-class>servlets.NewsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsServlet</servlet-name>
+		<url-pattern>/news</url-pattern>
+	</servlet-mapping>
 
 	<!-- Error Handlers -->
 	<servlet>
