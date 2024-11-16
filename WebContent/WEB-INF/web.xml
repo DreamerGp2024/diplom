@@ -146,7 +146,14 @@
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/news</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>AddNewsServlet</servlet-name>
+		<servlet-class>servlets.AddNewsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddNewsServlet</servlet-name>
+		<url-pattern>/addpost</url-pattern>
+	</servlet-mapping>
 	<!-- Error Handlers -->
 	<servlet>
 		<servlet-name>ErrorHandlerServlet</servlet-name>
