@@ -8,7 +8,7 @@ import com.DreamerGp2024.model.UserRole;
 
 public interface UserService {
 
-    public User login(UserRole role, String email, String password, HttpSession session) throws StoreException;
+    public User login(String email, String password, HttpSession session) throws StoreException;
 
     public String register(UserRole role, User user) throws StoreException;
 
@@ -17,4 +17,6 @@ public interface UserService {
     public boolean logout(HttpSession session);
 
     public String getNameByUserID(int userID) throws StoreException;
+
+    public String getRoleByUserID(int userID) throws StoreException;
 }

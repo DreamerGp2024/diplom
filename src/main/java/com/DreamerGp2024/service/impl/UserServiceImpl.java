@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import com.DreamerGp2024.constant.ResponseCode;
 import com.DreamerGp2024.constant.db.UsersDBConstants;
-import com.DreamerGp2024.model.Book;
 import com.DreamerGp2024.model.StoreException;
 import com.DreamerGp2024.model.User;
 import com.DreamerGp2024.model.UserRole;
@@ -25,24 +24,30 @@ public class UserServiceImpl implements UserService {
             + "  VALUES(?,?,?,?,?,?,?,?)";
 
     private static final String loginUserQuery = "SELECT * FROM " + UsersDBConstants.TABLE_USERS + " WHERE "
-            + UsersDBConstants.COLUMN_EMAIL + "=? AND " + UsersDBConstants.COLUMN_PASSWORD + "=? AND "
-            + UsersDBConstants.COLUMN_ROLE + "=?";
+            + UsersDBConstants.COLUMN_EMAIL + "=? AND " + UsersDBConstants.COLUMN_PASSWORD + "=?";
 
     private static final String getUserNameByUserIDQuery = "SELECT * FROM " + UsersDBConstants.TABLE_USERS + " WHERE "
             + COLUMN_USERID + "=?";
 
+
+    private static String getRoleIDByString(String role){
+        return switch (role) {
+            case "3" -> "ADMIN";
+            case "1" -> "MANAGER";
+            default -> "CUSTOMER";
+        };
+    }
+
     @Override
-    public User login(UserRole role, String email, String password, HttpSession session) throws StoreException {
+    public User login(String email, String password, HttpSession session) throws StoreException {
         Connection con = DBUtil.getConnection();
         PreparedStatement ps;
         User user = null;
         System.out.println(email);
         try {
-            String userType = UserRole.MANAGER.equals(role) ? "1" : "2";
             ps = con.prepareStatement(loginUserQuery);
             ps.setString(1, email);
             ps.setString(2, password);
-            ps.setString(3, userType);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 user = new User();
@@ -52,7 +57,8 @@ public class UserServiceImpl implements UserService {
                 user.setEmail(email);
                 user.setPasswordUser(password);
                 user.setUserID(rs.getInt(COLUMN_USERID));
-                session.setAttribute(role.toString(), user.getEmail());
+                System.out.println(getRoleIDByString(this.getRoleByUserID(user.getUserID())));
+                session.setAttribute(getRoleIDByString(this.getRoleByUserID(user.getUserID())), user.getEmail());
                 session.setAttribute("userID", user.getUserID());
             }
         } catch (SQLException e) {
@@ -120,10 +126,27 @@ public class UserServiceImpl implements UserService {
             while (rs.next()) {
                 phone = rs.getString(COLUMN_PHONE);
             }
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
 
         }
         return phone;
     }
 
+    @Override
+    public String getRoleByUserID(int userID) throws StoreException {
+        String role = null;
+        Connection con = DBUtil.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(getUserNameByUserIDQuery);
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                role = rs.getString(COLUMN_ROLE);
+            }
+        } catch (SQLException ignored) {
+
+        }
+        return role;
+    }
 }

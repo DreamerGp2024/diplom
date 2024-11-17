@@ -1,7 +1,6 @@
 package servlets;
 
 import com.DreamerGp2024.constant.BookStoreConstants;
-import com.DreamerGp2024.constant.db.BooksDBConstants;
 import com.DreamerGp2024.model.Post;
 import com.DreamerGp2024.model.UserRole;
 import com.DreamerGp2024.service.impl.PostServiceImpl;
@@ -24,10 +23,10 @@ public class AddNewsServlet extends HttpServlet {
         PrintWriter pw = res.getWriter();
         res.setContentType(BookStoreConstants.CONTENT_TYPE_TEXT_HTML);
 
-        if (!StoreUtil.isLoggedIn(UserRole.MANAGER, req.getSession())) {
+        if (!StoreUtil.isLoggedIn(UserRole.ADMIN, req.getSession())) {
             RequestDispatcher rd = req.getRequestDispatcher("SellerLogin.html");
             rd.include(req, res);
-            pw.println("<table class=\"tab\"><tr><td>Please Login First to Continue!!</td></tr></table>");
+            pw.println("<table class=\"tab\"><tr><td>Please Login As Admin To Continue!!</td></tr></table>");
             return;
         }
 

@@ -46,12 +46,8 @@ public class ViewBookServlet extends HttpServlet {
             StoreUtil.setActiveTab(pw, "books");
 
             // Show the heading for the page
-            pw.println("<div id='topmid' style='background-color:grey'>Available Books"
-                    + "<form action=\"cart\" method=\"post\" style='float:right; margin-right:20px'>"
-                    + "<input type='submit' class=\"btn btn-primary\" name='cart' value='Proceed'/></form>"
-                    + "</div>");
-            pw.println("<div class=\"container\">\r\n"
-                    + "        <div class=\"card-columns\">");
+            pw.println("<div id='topmid' style='background-color:grey'>Available Books</div>");
+            pw.println("<div class=\"container\">\r\n<div class=\"card-columns\">");
 
             // Add or Remove items from the cart, if requested
             StoreUtil.updateCartItems(req);
@@ -111,8 +107,8 @@ public class ViewBookServlet extends HttpServlet {
         // Bootstrap card to show the book data
         return "<div class=\"card\" style=\"height: 250px;\" >\r\n"
                 + "                <div class=\"row card-body\">\r\n"
-                + "                    <a href=\"/onlinebookstore_war/bookDetailsServlet?id="+book.getBarcode()+"\">"
-                + "                        <img class=\"col-sm-6\" src=\"logo.png\" alt=\"Card image cap\">\r\n"
+                + "                    <a style=\"display: inline-block; width: 50%;\" href=\"/onlinebookstore_war/bookDetailsServlet?id="+book.getBarcode()+"\">"
+                + "                        <img style=\"width: 100%;\" src=\"logo.png\" alt=\"Card image cap\">\r\n"
                 + "                    </a>"
                 + "                    <div class=\"col-sm-6\">\r\n"
                 + "                        <h5 class=\"card-title text-success\">" + book.getName() + "</h5>\r\n"

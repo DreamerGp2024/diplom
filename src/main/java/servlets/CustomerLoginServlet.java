@@ -27,7 +27,7 @@ public class CustomerLoginServlet extends HttpServlet {
         String email = req.getParameter(UsersDBConstants.COLUMN_EMAIL);
         String password = req.getParameter(UsersDBConstants.COLUMN_PASSWORD);
 
-        User user = authService.login(UserRole.CUSTOMER, email, password, req.getSession());
+        User user = authService.login(email, password, req.getSession());
 
         try {
 
