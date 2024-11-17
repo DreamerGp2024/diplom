@@ -8,24 +8,35 @@
     <meta charset="UTF-8">
     <title>Карточка новости</title>
     <style>
+        .news-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
         .news-card {
-            border: 1px solid #ccc;
+            border: 1px solid #987856; /* Коричневый оттенок, взятый из деревянных рам магазина */
             padding: 16px;
             margin: 16px 0;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(143, 101, 55, 0.3); /* Мягкая тень с оттенком из изображения */
+            background-color: #f3f1e7; /* Кремовый фон для контраста */
+            width: 80%; /* Ширина карточки */
+            max-width: 600px; /* Максимальная ширина карточки */
         }
         .news-header {
             font-size: 1.5em;
             margin-bottom: 8px;
+            color: #763423; /* Темный оттенок, похожий на вывеску магазина */
         }
         .news-meta {
             font-size: 0.9em;
-            color: #666;
+            color: #a89a91; /* Приглушенный красный оттенок из кирпичей вокруг окна магазина */
             margin-bottom: 16px;
         }
         .news-body {
             font-size: 1.1em;
+            color: #5c5346; /* Темный земляной оттенок для читаемости текста */
         }
     </style>
         <link rel="apple-touch-icon" sizes="180x180"
@@ -102,7 +113,8 @@
         </div>
     </nav>
 </header>
-<h1>Новости</h1>
+<h1 style="color: #5c5346;">Новости</h1>
+<div class="news-container">
 <%
     List<Post> posts = (List<Post>) request.getAttribute("posts");
     if (posts != null) {
@@ -117,6 +129,7 @@
         }
     }
 %>
+</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js"></script>
