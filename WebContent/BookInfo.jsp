@@ -32,6 +32,30 @@
         var activeTab = 'viewbook';
     </script>
 <%--    <title>Детали книги</title>--%>
+    <script>
+        function submitForm(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "comments", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("response").innerHTML = xhr.responseText;
+                    document.getElementById("title").value = "";
+                    document.getElementById("comment").value = "";
+                }
+            };
+
+            var title = document.getElementById("title").value;
+            var comment = document.getElementById("comment").value;
+            var bookID = document.getElementById("book").value;
+
+            var params = "title=" + encodeURIComponent(title) + "&comment=" + encodeURIComponent(comment) + "&book=" + encodeURIComponent(bookID);
+            xhr.send(params);
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -70,7 +94,16 @@
     <p>Автор: ${book.getAuthor()}</p>
     <p>Цена: ${book.getPrice()}</p>
     <p>Штрихкод: ${book.getBarcode()}</p>
-
+    <h2>Оставьте ваш комментарий</h2>
+    <form onsubmit="submitForm(event)">
+        <input type="hidden" id="book" name="book" value="${book.getBarcode()}">
+        <label for="title">Заголовок:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+        <label for="comment">Комментарий:</label><br>
+        <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
+        <input type="submit" value="Отправить">
+    </form>
+    <div id="response"></div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js"></script>

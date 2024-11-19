@@ -154,6 +154,14 @@
 		<servlet-name>AddNewsServlet</servlet-name>
 		<url-pattern>/addpost</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>CommentsServlet</servlet-name>
+		<servlet-class>servlets.CommentsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CommentsServlet</servlet-name>
+		<url-pattern>/comments</url-pattern>
+	</servlet-mapping>
 	<!-- Error Handlers -->
 	<servlet>
 		<servlet-name>ErrorHandlerServlet</servlet-name>
