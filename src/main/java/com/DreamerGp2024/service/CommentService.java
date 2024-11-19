@@ -11,5 +11,5 @@ public interface CommentService {
 
     public String deleteCommentById(String commentID) throws StoreException;
 
-    public List<Comment> getAllComments() throws StoreException;
+    public List<Comment> getAllComments(String bookID) throws StoreException;
 }

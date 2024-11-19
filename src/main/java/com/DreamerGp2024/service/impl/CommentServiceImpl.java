@@ -66,12 +66,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getAllComments() throws StoreException {
+    public List<Comment> getAllComments(String bookID) throws StoreException {
         List<Comment> comments = new ArrayList<>();
         Connection con = DBUtil.getConnection();
-        String getAllPostsQuery = "SELECT * FROM " + TABLE_COMMENTS;
+        String getAllPostsQuery = "SELECT * FROM " + TABLE_COMMENTS + " WHERE " + COLUMN_BOOK + " = ?";
         try {
             PreparedStatement ps = con.prepareStatement(getAllPostsQuery);
+            ps.setString(1, bookID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Comment comment = new Comment(

@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.DreamerGp2024.model.Comment" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: kostya89
   Date: 12.11.2024
@@ -104,6 +105,20 @@
         <input type="submit" value="Отправить">
     </form>
     <div id="response"></div>
+    <%
+        List<Comment> comments = (List<Comment>) request.getAttribute("comments");
+        if (comments != null) {
+            for (Comment item : comments) {
+    %>
+    <div>
+        <div><%= item.getHeader() %></div>
+        <div>Автор: <%= item.getAuthor() %></div>
+        <div><%= item.getBody() %></div>
+    </div>
+    <%
+            }
+        }
+    %>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js"></script>
