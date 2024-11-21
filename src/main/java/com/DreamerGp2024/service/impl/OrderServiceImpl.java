@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.DreamerGp2024.constant.db.OrdersDBConstants.*;
 
@@ -103,13 +104,21 @@ public class OrderServiceImpl implements OrderService {
         return orders;
     }
 
+    private OrderStatus pushStatus(OrderStatus status){
+        if (Objects.requireNonNull(status) == OrderStatus.NEW) {
+            return OrderStatus.PROCESS;
+        }
+        return OrderStatus.COMPLETED;
+    }
     @Override
-    public String changeOrderStatusByID(String orderID, OrderStatus status) throws StoreException {
+    public String pushOrderStatusByID(String orderID) throws StoreException {
         String responseCode = ResponseCode.FAILURE.name();
         Connection con = DBUtil.getConnection();
         try {
+            Order order = getOrderById(orderID);
+
             PreparedStatement ps = con.prepareStatement(updateOrderStatusByIdQuery);
-            ps.setString(1, status.name());
+            ps.setString(1, pushStatus(order.getStatus()).toString());
             ps.setString(2, orderID);
             ps.executeUpdate();
             responseCode = ResponseCode.SUCCESS.name();

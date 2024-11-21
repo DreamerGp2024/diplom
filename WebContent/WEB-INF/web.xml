@@ -162,6 +162,14 @@
 		<servlet-name>CommentsServlet</servlet-name>
 		<url-pattern>/comments</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>PushOrders</servlet-name>
+		<servlet-class>servlets.PushOrders</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PushOrders</servlet-name>
+		<url-pattern>/pushOrders</url-pattern>
+	</servlet-mapping>
 	<!-- Error Handlers -->
 	<servlet>
 		<servlet-name>ErrorHandlerServlet</servlet-name>

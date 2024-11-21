@@ -11,7 +11,7 @@ public interface OrderService {
 
     public List<Order> getOrders() throws StoreException;
 
-    public String changeOrderStatusByID(String orderID, OrderStatus status) throws StoreException;
+    public String pushOrderStatusByID(String orderID) throws StoreException;
 
     public String addOrder(Order order) throws StoreException;
 }
