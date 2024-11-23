@@ -1,13 +1,5 @@
 package com.DreamerGp2024.service.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Random;
-
-import javax.servlet.http.HttpSession;
-
 import com.DreamerGp2024.constant.ResponseCode;
 import com.DreamerGp2024.constant.db.UsersDBConstants;
 import com.DreamerGp2024.model.StoreException;
@@ -15,6 +7,15 @@ import com.DreamerGp2024.model.User;
 import com.DreamerGp2024.model.UserRole;
 import com.DreamerGp2024.service.UserService;
 import com.DreamerGp2024.util.DBUtil;
+
+import javax.servlet.http.HttpSession;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import static com.DreamerGp2024.constant.db.UsersDBConstants.*;
 
@@ -29,8 +30,12 @@ public class UserServiceImpl implements UserService {
     private static final String getUserNameByUserIDQuery = "SELECT * FROM " + UsersDBConstants.TABLE_USERS + " WHERE "
             + COLUMN_USERID + "=?";
 
+    private static final String getAllUsersQuery = "SELECT * FROM " + UsersDBConstants.TABLE_USERS;
 
-    private static String getRoleIDByString(String role){
+    private static final String deleteUserByUserIDQuery = "DELETE FROM " + UsersDBConstants.TABLE_USERS + " WHERE " + COLUMN_USERID + "=?";
+
+
+    private static String getRoleIDByString(String role) {
         return switch (role) {
             case "3" -> "ADMIN";
             case "1" -> "MANAGER";
@@ -43,7 +48,6 @@ public class UserServiceImpl implements UserService {
         Connection con = DBUtil.getConnection();
         PreparedStatement ps;
         User user = null;
-        System.out.println(email);
         try {
             ps = con.prepareStatement(loginUserQuery);
             ps.setString(1, email);
@@ -57,7 +61,6 @@ public class UserServiceImpl implements UserService {
                 user.setEmail(email);
                 user.setPasswordUser(password);
                 user.setUserID(rs.getInt(COLUMN_USERID));
-                System.out.println(getRoleIDByString(this.getRoleByUserID(user.getUserID())));
                 session.setAttribute(getRoleIDByString(this.getRoleByUserID(user.getUserID())), user.getEmail());
                 session.setAttribute("userID", user.getUserID());
             }
@@ -65,6 +68,47 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public void deleteUserByUserID(int userID) throws StoreException {
+        Connection con = DBUtil.getConnection();
+        PreparedStatement ps;
+        try {
+            ps = con.prepareStatement(deleteUserByUserIDQuery);
+            ps.setInt(1, userID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<User> getAllUsers() throws StoreException {
+        List<User> users = new ArrayList<>();
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps;
+            ps = con.prepareStatement(getAllUsersQuery);
+            ResultSet rs = ps.executeQuery();
+            User user = null;
+            while (rs.next()) {
+                user = new User();
+                UserRole role = UserRole.valueOf(getRoleIDByString(rs.getString(COLUMN_ROLE)));
+                ArrayList<UserRole> roles = new ArrayList<>();
+                roles.add(role);
+                user.setFirstName(rs.getString(COLUMN_FIRSTNAME));
+                user.setLastName(rs.getString(COLUMN_LASTNAME));
+                user.setPhone(rs.getString(COLUMN_PHONE));
+                user.setEmail(rs.getString(COLUMN_EMAIL));
+                user.setPasswordUser(rs.getString(COLUMN_PASSWORD));
+                user.setAddress(rs.getString(COLUMN_ADDRESS));
+                user.setRole(roles);
+                user.setUserID(rs.getInt(COLUMN_USERID));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return users;
     }
 
     @Override

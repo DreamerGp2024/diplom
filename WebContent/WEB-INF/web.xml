@@ -170,6 +170,22 @@
 		<servlet-name>PushOrders</servlet-name>
 		<url-pattern>/pushOrders</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>UsersServlet</servlet-name>
+		<servlet-class>servlets.UsersServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UsersServlet</servlet-name>
+		<url-pattern>/users</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>DeleteUserServlet</servlet-name>
+		<servlet-class>servlets.DeleteUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteUserServlet</servlet-name>
+		<url-pattern>/deleteUser</url-pattern>
+	</servlet-mapping>
 	<!-- Error Handlers -->
 	<servlet>
 		<servlet-name>ErrorHandlerServlet</servlet-name>

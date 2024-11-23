@@ -1,10 +1,11 @@
 package com.DreamerGp2024.service;
 
-import javax.servlet.http.HttpSession;
-
 import com.DreamerGp2024.model.StoreException;
 import com.DreamerGp2024.model.User;
 import com.DreamerGp2024.model.UserRole;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public interface UserService {
 
@@ -19,4 +20,8 @@ public interface UserService {
     public String getNameByUserID(int userID) throws StoreException;
 
     public String getRoleByUserID(int userID) throws StoreException;
+
+    public List<User> getAllUsers() throws StoreException;
+
+    public void deleteUserByUserID(int userID) throws StoreException;
 }
