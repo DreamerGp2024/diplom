@@ -193,4 +193,24 @@ public class UserServiceImpl implements UserService {
         }
         return role;
     }
+
+    @Override
+    public String getFIOByUserID(int userID) throws StoreException {
+        String fn = null;
+        String sn = null;
+        Connection con = DBUtil.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(getUserNameByUserIDQuery);
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                fn = rs.getString(COLUMN_FIRSTNAME);
+                sn = rs.getString(COLUMN_LASTNAME);
+            }
+        } catch (SQLException ignored) {
+
+        }
+        return fn + " " + sn;
+    }
 }

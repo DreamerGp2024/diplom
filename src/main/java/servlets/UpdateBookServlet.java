@@ -44,8 +44,8 @@ public class UpdateBookServlet extends HttpServlet {
                 String bAuthor = req.getParameter(BooksDBConstants.COLUMN_AUTHOR);
                 double bPrice = Double.parseDouble(req.getParameter(BooksDBConstants.COLUMN_PRICE));
                 int bQty = Integer.parseInt(req.getParameter(BooksDBConstants.COLUMN_QUANTITY));
-
-                Book book = new Book(bCode, bName, bAuthor, bPrice, bQty);
+                String bDescription = req.getParameter(BooksDBConstants.COLUMN_DESCRIPTIONBOOK);
+                Book book = new Book(bCode, bName, bAuthor, bPrice, bQty,bDescription);
                 String message = bookService.updateBook(book);
                 if (ResponseCode.SUCCESS.name().equalsIgnoreCase(message)) {
                     pw.println(
@@ -79,6 +79,7 @@ public class UpdateBookServlet extends HttpServlet {
             + "        <label for=\"bookAuthor\">Book Author : </label><input type=\"text\" name=\"author\" id=\"bookAuthor\" placeholder=\"Enter Author's Name\" value='" + book.getAuthor() + "' required><br/>\r\n"
             + "        <label for=\"bookPrice\">Book Price : </label><input type=\"number\" name=\"price\" placeholder=\"Enter the Price\" value='" + book.getPrice() + "' required><br/>\r\n"
             + "        <label for=\"bookQuantity\">Book Qnty : </label><input type=\"number\" name=\"quantity\" id=\"bookQuantity\" placeholder=\"Enter the quantity\" value='" + book.getQuantity() + "' required><br/>\r\n"
+               + "        <label for=\"bookDescription\">Book Description : </label><input type=\"text\" name=\"descriptionbook\" id=\"bookDescription\" placeholder=\"Enter book's description\" value='" + book.getDescriptionBook() + "' required><br/>\r\n"
             + "        <input class=\"btn btn-success my-2\" type=\"submit\" name='updateFormSubmitted' value=\" Update Book \">\r\n"
             + "    </form>\r\n"
             + "</div>";

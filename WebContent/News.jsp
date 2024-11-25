@@ -113,8 +113,22 @@
         </div>
     </nav>
 </header>
-<h1 style="color: #5c5346;">Новости</h1>
 <div class="news-container">
+<h1 style="border: 1px solid #987856; /* Коричневый оттенок, взятый из деревянных рам магазина */
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(143, 101, 55, 0.3); /* Мягкая тень с оттенком из изображения */
+            background-color: #f3f1e7; /* Кремовый фон для контраста */
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            font-size: 2.5em;
+            color: #763423;
+            width: 100%;">Новости:</h1>
+</div>
+<div class="news-container">
+
 <%
     List<Post> posts = (List<Post>) request.getAttribute("posts");
     if (posts != null) {

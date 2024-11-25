@@ -48,7 +48,6 @@ public class AddNewsServlet extends HttpServlet {
             int postID = random.nextInt(Integer.MAX_VALUE);
             int postAuthor = Integer.parseInt(session.getAttribute("userID").toString());
             postHeader = req.getParameter("postHeader");
-            System.out.println(postHeader);
             String postBody = req.getParameter("postBody");
 
             Post post = new Post(postID, postAuthor, System.currentTimeMillis() / 1000L, postHeader, postBody);

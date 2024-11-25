@@ -8,4 +8,5 @@ public interface BooksDBConstants {
 	public static String COLUMN_AUTHOR = "author";
 	public static String COLUMN_PRICE = "price";
 	public static String COLUMN_QUANTITY = "quantity";
+	public static String COLUMN_DESCRIPTIONBOOK = "descriptionbook";
 }

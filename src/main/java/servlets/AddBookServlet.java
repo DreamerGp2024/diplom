@@ -50,8 +50,8 @@ public class AddBookServlet extends HttpServlet {
             String bAuthor = req.getParameter(BooksDBConstants.COLUMN_AUTHOR);
             double bPrice = Integer.parseInt(req.getParameter(BooksDBConstants.COLUMN_PRICE));
             int bQty = Integer.parseInt(req.getParameter(BooksDBConstants.COLUMN_QUANTITY));
-
-            Book book = new Book(bCode, bName, bAuthor, bPrice, bQty);
+            String bDescription = req.getParameter(BooksDBConstants.COLUMN_DESCRIPTIONBOOK);
+            Book book = new Book(bCode, bName, bAuthor, bPrice, bQty,bDescription);
             String message = bookService.addBook(book);
             if ("SUCCESS".equalsIgnoreCase(message)) {
                 pw.println(
@@ -75,6 +75,7 @@ public class AddBookServlet extends HttpServlet {
                         <label for="bookAuthor">Book Author : </label><input type="text" name="author" id="bookAuthor" placeholder="Enter Author's Name" required><br/>
                         <label for="bookPrice">Book Price : </label><input type="number" name="price" placeholder="Enter the Price" required><br/>
                         <label for="bookQuantity">Book Qnty : </label><input type="number" name="quantity" id="bookQuantity" placeholder="Enter the quantity" required><br/>
+                        <label for="bookDescription">Book Description : </label> <input type="text" name="bookdescription" id="bookdescription" placeholder="Enter Book's description" required><br/>
                         <input class="btn btn-success my-2" type="submit" value="Add Book">
                      </form>
                 </div>

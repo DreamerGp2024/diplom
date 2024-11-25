@@ -9,22 +9,22 @@ public class Book implements Serializable {
     private String author;
     private double price;
     private int quantity;
+    private  String descriptionbook;
 
-    public Book(String barcode, String name, String author, double price, int quantity) {
+    public Book(String barcode, String name, String author, double price, int quantity, String descriptionbook) {
         this.barcode = barcode;
         this.name = name;
         this.author = author;
         this.price = price;
         this.quantity = quantity;
+        this.descriptionbook=descriptionbook;
     }
 
     public Book() {
         super();
     }
     public String getBarcode() { return barcode; }
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
+    public void setBarcode(String barcode) {this.barcode = barcode;    }
     public String getName() {
         return name;
     }
@@ -47,4 +47,8 @@ public class Book implements Serializable {
         return price;
     }
     public void setPrice(double price) { this.price = price; }
+    public String getDescriptionBook() {
+        return descriptionbook;
+    }
+    public void setDescriptionBook(String descriptionbook) { this.descriptionbook = descriptionbook; }
 }

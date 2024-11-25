@@ -23,7 +23,7 @@ public class BookServiceImpl implements BookService {
     private static final String deleteBookByIdQuery = "DELETE FROM " + BooksDBConstants.TABLE_BOOKS + "  WHERE "
             + BooksDBConstants.COLUMN_BARCODE + "=?";
 
-    private static final String addBookQuery = "INSERT INTO " + BooksDBConstants.TABLE_BOOKS + "  VALUES(?,?,?,?,?)";
+    private static final String addBookQuery = "INSERT INTO " + BooksDBConstants.TABLE_BOOKS + "  VALUES(?,?,?,?,?,?)";
 
     private static final String updateBookQtyByIdQuery = "UPDATE " + BooksDBConstants.TABLE_BOOKS + " SET "
             + BooksDBConstants.COLUMN_QUANTITY + "=? WHERE " + BooksDBConstants.COLUMN_BARCODE
@@ -34,6 +34,7 @@ public class BookServiceImpl implements BookService {
             + BooksDBConstants.COLUMN_AUTHOR + "=?, "
             + BooksDBConstants.COLUMN_PRICE + "=?, "
             + BooksDBConstants.COLUMN_QUANTITY + "=? "
+            + BooksDBConstants.COLUMN_DESCRIPTIONBOOK + "=? "
             + "  WHERE " + BooksDBConstants.COLUMN_BARCODE
             + "=?";
 
@@ -52,8 +53,9 @@ public class BookServiceImpl implements BookService {
                 String bAuthor = rs.getString(3);
                 int bPrice = rs.getInt(4);
                 int bQty = rs.getInt(5);
+                String bdescription = rs.getString(6);
 
-                book = new Book(bCode, bName, bAuthor, bPrice, bQty);
+                book = new Book(bCode, bName, bAuthor, bPrice, bQty,bdescription);
             }
         } catch (SQLException e) {
 
@@ -76,8 +78,9 @@ public class BookServiceImpl implements BookService {
                 String bAuthor = rs.getString(3);
                 int bPrice = rs.getInt(4);
                 int bQty = rs.getInt(5);
+                String bdescription = rs.getString(6);
 
-                Book book = new Book(bCode, bName, bAuthor, bPrice, bQty);
+                Book book = new Book(bCode, bName, bAuthor, bPrice, bQty,bdescription);
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -115,6 +118,7 @@ public class BookServiceImpl implements BookService {
             ps.setString(3, book.getAuthor());
             ps.setDouble(4, book.getPrice());
             ps.setInt(5, book.getQuantity());
+            ps.setString(6, book.getDescriptionBook());
             int k = ps.executeUpdate();
             if (k == 1) {
                 responseCode = ResponseCode.SUCCESS.name();
@@ -160,8 +164,8 @@ public class BookServiceImpl implements BookService {
                 String bAuthor = rs.getString(3);
                 int bPrice = rs.getInt(4);
                 int bQty = rs.getInt(5);
-
-                Book book = new Book(bCode, bName, bAuthor, bPrice, bQty);
+                String bDescription = rs.getString(6);
+                Book book = new Book(bCode, bName, bAuthor, bPrice, bQty,bDescription);
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -181,6 +185,7 @@ public class BookServiceImpl implements BookService {
             ps.setDouble(3, book.getPrice());
             ps.setInt(4, book.getQuantity());
             ps.setString(5, book.getBarcode());
+            ps.setString(6, book.getDescriptionBook());
             ps.executeUpdate();
             responseCode = ResponseCode.SUCCESS.name();
         } catch (Exception e) {

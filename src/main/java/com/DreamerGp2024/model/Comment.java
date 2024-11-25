@@ -6,13 +6,13 @@ public class Comment implements Serializable {
 
     private int commentID;
     private String book;
-    private int author;
+    private String author;
     private String header;
     private String body;
     private String secretBody;
 
 
-    public Comment(int commentID, String book, int author, String header, String body, String secretBody) {
+    public Comment(int commentID, String book, String author, String header, String body, String secretBody) {
         this.commentID = commentID;
         this.book = book;
         this.author = author;
@@ -41,11 +41,9 @@ public class Comment implements Serializable {
         this.book = book;
     }
 
-    public int getAuthor() {
-        return author;
-    }
+    public String getAuthor() {return author;    }
 
-    public void setAuthor(int author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 

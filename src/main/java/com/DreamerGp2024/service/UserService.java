@@ -24,4 +24,5 @@ public interface UserService {
     public List<User> getAllUsers() throws StoreException;
 
     public void deleteUserByUserID(int userID) throws StoreException;
+    public String getFIOByUserID(int userID) throws StoreException;
 }

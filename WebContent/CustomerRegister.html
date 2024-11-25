@@ -45,13 +45,12 @@ input {
 	<br/>
 	
 	<form action="userreg" method="post">
-		<table class="tab" style="width:40%">
+		<div style="align-items: center;display: flex;justify-content: center;">
+		<div class="form-container" style="flex-direction: column; align-items: flex-start;">
 
-			<tr style="background-color: white; color: green; border-radius: 25%">
-				<td>Enter the Registration Details</td>
-			</tr>
-			<tr>
-				<td>
+
+				<h1>Enter the Registration Details</h1>
+
 				<!-- <label for="username">Username : </label> 
 				<input
 					type="text" name="username" id="userName"
@@ -60,43 +59,41 @@ input {
 				<label for="email"> Email     :  </label>
 					<input type="text" name="email" id="email"
 					placeholder="Enter your Email">
-				<br>
+				<br/>
 				<label for="passwordUser">Password :&nbsp; </label>
 				<input
-					type="password" name="passwordUser" id="passwordUser"
+					type="password" name="passwordUser" id="passwordUser" style="width: 100%;"
 					placeholder="Enter Password" required>
-				<br>
+				<br/>
 				<label for="firstName">First Name : </label> 
 				<input
 					type="text" name="firstname" id="firstName"
 					placeholder="Enter your First Name" required>
-				<br>
+				<br/>
 				<label for="lastName">Last Name : </label> 
 				<input
 					type="text" name="lastname" id="lastName"
 					placeholder="Enter your Last Name" required>
-				<br>
+				<br/>
 				<label for="address">Address: </label>
-				<textarea name="address" id="address"
+				<textarea name="address" id="address" style="width: 100%;"
 						placeholder="Enter your Address" required> </textarea>
-				<br>
+				<br/>
 				<label for="phno">Mobile No : </label> 
 				<input type="text"
 					name="phone" id="phno" placeholder="Enter your Phone Number"
 					required>
-				<br>
+				<br/>
 				<input type="checkbox"
 					name="acceptance" /> 
 				<label
 					for="checkbox" for="acceptance"
 					style="font-size: small; color: blue">I
 						ACCEPT ALL TERMS &amp; CONDITIONS</label>
-				<br>
+				<br/>
 				<input style="text-align:center;" class="btn btn-success" type="submit" value="REGISTER ME ">
-				</td>
-			</tr>
-	
-		</table>
+		</div>
+		</div>
 	</form>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>

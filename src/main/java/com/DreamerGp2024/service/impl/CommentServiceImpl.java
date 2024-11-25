@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
             PreparedStatement ps = con.prepareStatement(insertPostQuery);
             ps.setInt(1, comment.getCommentID());
             ps.setString(2, comment.getBook());
-            ps.setInt(3, comment.getAuthor());
+            ps.setString(3, comment.getAuthor());
             ps.setString(4, comment.getHeader());
             ps.setString(5, comment.getBody());
             ps.setString(6, comment.getSecretBody());
@@ -78,7 +78,7 @@ public class CommentServiceImpl implements CommentService {
                 Comment comment = new Comment(
                         rs.getInt(COLUMN_COMMENTID),
                         rs.getString(COLUMN_BOOK),
-                        rs.getInt(COLUMN_AUTHOR),
+                        rs.getString(COLUMN_AUTHOR),
                         rs.getString(COLUMN_HEADER),
                         rs.getString(COLUMN_BODY),
                         rs.getString(COLUMN_SECRETBODY)
