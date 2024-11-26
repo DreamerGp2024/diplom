@@ -125,7 +125,7 @@
             flex-direction: column;
             font-size: 2.5em;
             color: #763423;
-            width: 100%;">Новости:</h1>
+            width: 100%;">News:</h1>
 </div>
 <div class="news-container">
 

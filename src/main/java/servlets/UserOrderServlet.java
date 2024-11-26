@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
-public class OrderServlet extends HttpServlet {
+public class UserOrderServlet extends HttpServlet {
 
     OrderServiceImpl orderService = new OrderServiceImpl();
     UserServiceImpl userService = new UserServiceImpl();
@@ -26,25 +26,29 @@ public class OrderServlet extends HttpServlet {
         PrintWriter pw = res.getWriter();
         res.setContentType("text/html");
 
-        if (!StoreUtil.isLoggedIn(UserRole.MANAGER, req.getSession()) && !StoreUtil.isLoggedIn(UserRole.ADMIN, req.getSession())) {
-            RequestDispatcher rd = req.getRequestDispatcher("SellerLogin.html");
+        if (!StoreUtil.isLoggedIn(UserRole.CUSTOMER, req.getSession())) {
+            RequestDispatcher rd = req.getRequestDispatcher("CustomerLogin.html");
             rd.include(req, res);
             pw.println("<table class=\"tab\"><tr><td>Please Login First to Continue!!</td></tr></table>");
             return;
         }
         try {
 
-            RequestDispatcher rd = req.getRequestDispatcher("SellerHome.html");
+            RequestDispatcher rd = req.getRequestDispatcher("CustomerHome.html");
             rd.include(req, res);
             pw.println("<div class='container'>");
 
-            StoreUtil.setActiveTab(pw, "orders");
+            StoreUtil.setActiveTab(pw, "userorders");
+            HttpSession session = req.getSession();
+            int userID = Integer.parseInt(session.getAttribute("userID").toString());
 
             List<Order> orders = orderService.getOrders();
             List<Order> realOrders = new ArrayList<>();
             Set<Integer> orderIDs = new HashSet<>();
             for (Order order : orders) {
-                orderIDs.add(order.getOrderID());
+                if (order.getCustomer() == userID) {
+                    orderIDs.add(order.getOrderID());
+                }
             }
             for (Integer orderID : orderIDs) {
                 List<String> barcodes = new ArrayList<>();
@@ -95,14 +99,12 @@ public class OrderServlet extends HttpServlet {
                     + "  <thead>\r\n"
                     + "    <tr style='background-color:black; color:white;'>\r\n"
                     + "      <th scope=\"col\">OrderID</th>\r\n"
-                    + "      <th scope=\"col\">Customer Phone</th>\r\n"
                     + "      <th scope=\"col\">Books</th>\r\n"
                     + "      <th scope=\"col\">Prices</th>\r\n"
                     + "      <th scope=\"col\">Quantities</th>\r\n"
                     + "      <th scope=\"col\">Total</th>\r\n"
                     + "      <th scope=\"col\">Manager</th>\r\n"
                     + "      <th scope=\"col\">Status</th>\r\n"
-                    + "      <th scope=\"col\">Action</th>\r\n"
                     + "    </tr>\r\n"
                     + "  </thead>\r\n"
                     + "  <tbody>\r\n");
@@ -126,7 +128,7 @@ public class OrderServlet extends HttpServlet {
     }
 
 
-    public String getRowData(Order order, int id) throws StoreException {
+    public String getRowData(Order order, int id) {
 
 
         String books = "";
@@ -142,22 +144,17 @@ public class OrderServlet extends HttpServlet {
             quants += order.getQuantity().get(i) + " pcs.<br>";
         }
         double total=order.getTotal();
-//        String mngr = userService.getFIOByUserID(order.getManager()).equals("null null") ? "" : userService.getFIOByUserID(order.getManager());
 
         try {
             return
                     "    <tr>\r\n"
                     + "      <th scope=\"row\">" + order.getOrderID() + "</th>\r\n"
-                    + "      <td>" + userService.getNameByUserID(order.getCustomer()) + "</td>\r\n"
                     + "      <td>" + books + "</td>\r\n"
                     + "      <td>" + prices + "</td>\r\n"
                     + "      <td>" + quants + "</td>\r\n"
                     + "      <td>" + total + "</td>\r\n"
                     + "      <td>" + userService.getFIOByUserID(order.getManager()) + "</td>\r\n"
                     + "      <td>" + order.getStatus().name() + "</td>\r\n"
-                    + "      <td><form onsubmit=\"submitForm(event)\">"
-                    + "          <input type='hidden' id='" + id +"' name='orderID' value='" + order.getOrderID() + "'/>"
-                    + "          <button type='submit' id='" + id +"' class=\"btn btn-success\">"+ "<->" +"</button>"
                     + "          </form>"
                     + "    </tr>\r\n";
         } catch (StoreException ignored) {

@@ -74,9 +74,13 @@
             border: 1px solid black;
             padding: 8px;
             text-align: left;
+            background-color: #f2f2f2;
         }
         th {
             background-color: #f2f2f2;
+        }
+        td {
+
         }
     </style>
     <nav class="navbar navbar-expand-sm bg-dark"
@@ -94,53 +98,38 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <span>
-                        <a class="nav-link" href="viewbook" id="home">Home</a>
-                    </span>
-                </li>
-                <li class="nav-item ">
-                    <span>
-                        <a class="nav-link" href="viewbook" id="books">Available Books</a>
-                    </span>
-                </li>
-                <li class="nav-item ">
-                    <span>
-                        <a class="nav-link glyphicon glyphicon-shopping-cart" href="cart" id="cart"> Cart</a>
-                    </span>
-                </li>
-                <li class="nav-item ">
-                    <span>
-                        <a class="nav-link glyphicon " href="news" id="news"> News</a>
-                    </span>
-                </li>
-                <li class="nav-item ">
-                    <span>
-                        <a class="nav-link" href="about" id="about">About Us</a>
-                    </span>
-                </li>
-                <li class="nav-item ">
-                    <span>
-                        <a class="nav-link" href="logout" id="logout">Logout</a>
-                    </span>
-                </li>
+                <!--					<li class="nav-item"><span><a-->
+                <!--							class="nav-link" href="storebooks" id="home">Home</a></span></li>-->
+                <li class="nav-item "><span><a class="nav-link"
+                                               href="storebooks" id="storebooks">Store Books</a></span></li>
+                <li class="nav-item "><span><a class="nav-link"
+                                               href="addbook" id="addbook">Add Books</a></span></li>
+                <li class="nav-item "><span><a class="nav-link"
+                                               href="orders" id="orders">Orders</a></span></li>
+                <li class="nav-item "><span><a class="nav-link" href="addpost" id="addpost">Add Post</a></span></li>
+                <li class="nav-item "><span><a class="nav-link" href="users" id="users">Users</a></span></li>
+                <li class="nav-item "><span><a class="nav-link"
+                                               href="about" id="about">About Us</a></span></li>
+                <li class="nav-item "><span><a class="nav-link"
+                                               href="logout" id="logout">Logout</a></span></li>
             </ul>
         </div>
     </nav>
 </header>
-<h2>Список пользователей</h2>
-<table>
+<div style="text-align: center;">
+<h3 style="width: 75%; margin-left: auto; margin-right: auto;background:#ffff80">List of Users</h3>
+<table style="width: 75%; margin-left: auto; margin-right: auto;">
     <thead>
     <tr>
         <th>ID</th>
         <th>Email</th>
-        <th>Пароль</th>
-        <th>Имя</th>
-        <th>Фамилия</th>
-        <th>Телефон</th>
-        <th>Адрес</th>
-        <th>Роли</th>
-        <th>Действия</th>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Role</th>
+        <th>Make manager</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -148,15 +137,22 @@
         List<User> users = (List<User>) request.getAttribute("users");
         for (User user : users) {
     %>
+
     <tr>
         <td><%= user.getUserID() %></td>
         <td><%= user.getEmail() %></td>
-        <td><%= user.getPasswordUser() %></td>
         <td><%= user.getFirstName() %></td>
         <td><%= user.getLastName() %></td>
         <td><%= user.getPhone() %></td>
         <td><%= user.getAddress() %></td>
         <td><%= user.getRole().get(0).toString() %></td>
+        <td>
+            <form action="setmngr" method="post">
+                <input type="hidden" name="userID" value="<%= user.getUserID() %>">
+                <button type="submit">Make Manager</button>
+            </form>
+
+        </td>
         <td>
             <form action="deleteUser" method="post">
                 <input type="hidden" name="userID" value="<%= user.getUserID() %>">
@@ -164,11 +160,13 @@
             </form>
         </td>
     </tr>
+
     <%
         }
     %>
     </tbody>
 </table>
+</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js"></script>

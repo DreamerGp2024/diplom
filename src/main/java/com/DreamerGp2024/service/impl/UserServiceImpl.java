@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.DreamerGp2024.constant.db.OrdersDBConstants.*;
 import static com.DreamerGp2024.constant.db.UsersDBConstants.*;
 
 public class UserServiceImpl implements UserService {
@@ -42,6 +43,11 @@ public class UserServiceImpl implements UserService {
             default -> "CUSTOMER";
         };
     }
+
+    private static final String updateUserRoleByIDQuery = "UPDATE " + TABLE_USERS + " SET "
+            + COLUMN_ROLE + "=? "
+            + "  WHERE " + COLUMN_USERID
+            + "=?";
 
     @Override
     public User login(String email, String password, HttpSession session) throws StoreException {
@@ -207,10 +213,33 @@ public class UserServiceImpl implements UserService {
             while (rs.next()) {
                 fn = rs.getString(COLUMN_FIRSTNAME);
                 sn = rs.getString(COLUMN_LASTNAME);
+                if (fn == null) {
+                    fn = "";
+                    sn = "";
+                }
             }
         } catch (SQLException ignored) {
 
         }
         return fn + " " + sn;
     }
+
+    @Override
+    public String setRole(int userID, String role) throws StoreException {
+        String responseCode = ResponseCode.FAILURE.name();
+        Connection con = DBUtil.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(updateUserRoleByIDQuery);
+            ps.setString(1, role);
+            ps.setInt(2, userID);
+            ps.executeUpdate();
+            responseCode = ResponseCode.SUCCESS.name();
+        } catch (Exception e) {
+            responseCode += " : " + e.getMessage();
+            e.printStackTrace();
+        }
+        return responseCode;
+    }
+
 }
+

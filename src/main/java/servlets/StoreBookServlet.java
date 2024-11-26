@@ -26,7 +26,7 @@ public class StoreBookServlet extends HttpServlet {
         res.setContentType("text/html");
 
         // Check if the customer is logged in, or else return to login page
-        if (!StoreUtil.isLoggedIn(UserRole.MANAGER, req.getSession())) {
+        if (!StoreUtil.isLoggedIn(UserRole.MANAGER, req.getSession()) && !StoreUtil.isLoggedIn(UserRole.ADMIN, req.getSession())) {
             RequestDispatcher rd = req.getRequestDispatcher("SellerLogin.html");
             rd.include(req, res);
             pw.println("<table class=\"tab\"><tr><td>Please Login First to Continue!!</td></tr></table>");

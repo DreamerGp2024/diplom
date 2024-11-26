@@ -87,13 +87,17 @@ public class ProcessPaymentServlet extends HttpServlet {
 
     public String addBookToCard(String bCode, String bName, String bAuthor, double bPrice, int bQty) {
         String button = "<a href=\"#\" class=\"btn btn-info\">Order Placed</a>\r\n";
-        return "<div class=\"card\">\r\n"
+
+        return "<div class=\"card\" style=\"height: 550px;\" >\r\n"
                 + "                <div class=\"row card-body\">\r\n"
-                + "                    <img class=\"col-sm-6\" src=\"logo.png\" alt=\"Card image cap\">\r\n"
+                + "                    <a style=\"display: inline-block; width: 65%;\" href=\"/onlinebookstore_war/bookDetailsServlet?id="+bCode+"\">"
+                + "                        <img style=\"width: 100%;\" src=\"https://webserver.kmt.support/onlinebookstore/"+bCode+".JPG\" alt=\"Card image cap\">\r\n"
+                + "                    </a>"
                 + "                    <div class=\"col-sm-6\">\r\n"
                 + "                        <h5 class=\"card-title text-success\">" + bName + "</h5>\r\n"
                 + "                        <p class=\"card-text\">\r\n"
-                + "                        Author: <span class=\"text-primary\" style=\"font-weight:bold;\"> " + bAuthor
+                + "                        Author: <span class=\"text-primary\" style=\"font-weight:bold;\"> "
+                + bAuthor
                 + "</span><br>\r\n"
                 + "                        </p>\r\n"
                 + "                        \r\n"

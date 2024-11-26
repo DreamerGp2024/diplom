@@ -13,5 +13,7 @@ public interface OrderService {
 
     public String pushOrderStatusByID(String orderID) throws StoreException;
 
+    public String attachManagerToOrderByID(String orderID, int mngr) throws StoreException;
+
     public String addOrder(Order order) throws StoreException;
 }

@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class DeleteUserServlet extends HttpServlet {
+public class SetManagerServlet extends HttpServlet {
     UserService userService = new UserServiceImpl();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int userID = Integer.parseInt(request.getParameter("userID"));
-        userService.deleteUserByUserID(userID);
+        userService.setRole(userID, "1");
         response.sendRedirect("users");
     }
 }

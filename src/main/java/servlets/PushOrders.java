@@ -14,6 +14,7 @@ public class PushOrders extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         HttpSession session = req.getSession();
         String orderID = req.getParameter("orderID");
+        orderService.attachManagerToOrderByID(orderID, Integer.parseInt(session.getAttribute("userID").toString()));
         orderService.pushOrderStatusByID(orderID);
     }
 }

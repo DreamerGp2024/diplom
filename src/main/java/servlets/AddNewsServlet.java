@@ -23,7 +23,7 @@ public class AddNewsServlet extends HttpServlet {
         PrintWriter pw = res.getWriter();
         res.setContentType(BookStoreConstants.CONTENT_TYPE_TEXT_HTML);
 
-        if (!StoreUtil.isLoggedIn(UserRole.MANAGER, req.getSession())) {
+        if (!StoreUtil.isLoggedIn(UserRole.MANAGER, req.getSession()) && !StoreUtil.isLoggedIn(UserRole.ADMIN, req.getSession())) {
             RequestDispatcher rd = req.getRequestDispatcher("SellerLogin.html");
             rd.include(req, res);
             pw.println("<table class=\"tab\"><tr><td>Please Login As Admin To Continue!!</td></tr></table>");

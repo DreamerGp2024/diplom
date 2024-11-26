@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
@@ -25,7 +26,7 @@ public class AddBookServlet extends HttpServlet {
         PrintWriter pw = res.getWriter();
         res.setContentType(BookStoreConstants.CONTENT_TYPE_TEXT_HTML);
 
-        if (!StoreUtil.isLoggedIn(UserRole.MANAGER, req.getSession())) {
+        if (!StoreUtil.isLoggedIn(UserRole.MANAGER, req.getSession()) && !StoreUtil.isLoggedIn(UserRole.ADMIN, req.getSession())) {
             RequestDispatcher rd = req.getRequestDispatcher("SellerLogin.html");
             rd.include(req, res);
             pw.println("<table class=\"tab\"><tr><td>Please Login First to Continue!!</td></tr></table>");
@@ -45,13 +46,13 @@ public class AddBookServlet extends HttpServlet {
         
  
         try {
-            String uniqueID = UUID.randomUUID().toString();
-            String bCode = uniqueID;
+            Random random = new Random();
+            Integer commentID = random.nextInt(Integer.MAX_VALUE);
             String bAuthor = req.getParameter(BooksDBConstants.COLUMN_AUTHOR);
             double bPrice = Integer.parseInt(req.getParameter(BooksDBConstants.COLUMN_PRICE));
             int bQty = Integer.parseInt(req.getParameter(BooksDBConstants.COLUMN_QUANTITY));
             String bDescription = req.getParameter(BooksDBConstants.COLUMN_DESCRIPTIONBOOK);
-            Book book = new Book(bCode, bName, bAuthor, bPrice, bQty,bDescription);
+            Book book = new Book(commentID.toString(), bName, bAuthor, bPrice, bQty,bDescription);
             String message = bookService.addBook(book);
             if ("SUCCESS".equalsIgnoreCase(message)) {
                 pw.println(

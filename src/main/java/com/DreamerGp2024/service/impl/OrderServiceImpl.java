@@ -43,6 +43,11 @@ public class OrderServiceImpl implements OrderService {
             + "  WHERE " + COLUMN_ORDERID
             + "=?";
 
+    private static final String updateOrderManagerByIdQuery = "UPDATE " + TABLE_ORDERS + " SET "
+            + COLUMN_MANAGER + "=? "
+            + "  WHERE " + COLUMN_ORDERID
+            + "=?";
+
     @Override
     public Order getOrderById(String orderID) throws StoreException {
         Order order = null;
@@ -91,10 +96,8 @@ public class OrderServiceImpl implements OrderService {
                 list1.add(rs.getDouble(4));
                 ArrayList<Integer> list2 = new ArrayList<>();
                 list2.add(rs.getInt(5));
-                double total=0;
-                for (Double elements : list1)
-                    total += elements;
-                orders.add(new Order(rs.getInt(1), rs.getInt(2), list,  list1, list2, total,rs.getInt(7), getStatusByString(rs.getString(8))
+
+                orders.add(new Order(rs.getInt(1), rs.getInt(2), list,  list1, list2, rs.getDouble(6), rs.getInt(7), getStatusByString(rs.getString(8))
                 ));
             }
         } catch (SQLException ignored) {
@@ -118,6 +121,23 @@ public class OrderServiceImpl implements OrderService {
 
             PreparedStatement ps = con.prepareStatement(updateOrderStatusByIdQuery);
             ps.setString(1, pushStatus(order.getStatus()).toString());
+            ps.setString(2, orderID);
+            ps.executeUpdate();
+            responseCode = ResponseCode.SUCCESS.name();
+        } catch (Exception e) {
+            responseCode += " : " + e.getMessage();
+            e.printStackTrace();
+        }
+        return responseCode;
+    }
+
+    @Override
+    public String attachManagerToOrderByID(String orderID, int mngr) throws StoreException {
+        String responseCode = ResponseCode.FAILURE.name();
+        Connection con = DBUtil.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(updateOrderManagerByIdQuery);
+            ps.setInt(1, mngr);
             ps.setString(2, orderID);
             ps.executeUpdate();
             responseCode = ResponseCode.SUCCESS.name();

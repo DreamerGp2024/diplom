@@ -131,6 +131,14 @@
 		<url-pattern>/orders</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>UserOrderServlet</servlet-name>
+		<servlet-class>servlets.UserOrderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserOrderServlet</servlet-name>
+		<url-pattern>/userorders</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>BookDetailsServlet</servlet-name>
 		<servlet-class>servlets.BookDetailsServlet</servlet-class>
 	</servlet>
@@ -185,6 +193,14 @@
 	<servlet-mapping>
 		<servlet-name>DeleteUserServlet</servlet-name>
 		<url-pattern>/deleteUser</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>SetManagerServlet</servlet-name>
+		<servlet-class>servlets.SetManagerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SetManagerServlet</servlet-name>
+		<url-pattern>/setmngr</url-pattern>
 	</servlet-mapping>
 	<!-- Error Handlers -->
 	<servlet>
