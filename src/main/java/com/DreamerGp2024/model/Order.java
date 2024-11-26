@@ -8,13 +8,13 @@ public class Order implements Serializable {
     private int orderID;
     private int customer;
     private List<String> barcode;
-    private double price;
+    private List<Double> price;
     private List<Integer> quantity;
     private double total;
     private int manager;
     private OrderStatus status;
 
-    public Order(int orderID, int customer, List<String> barcode, double price, List<Integer> quantity, double total, int manager,OrderStatus status) {
+    public Order(int orderID, int customer, List<String> barcode, List<Double> price, List<Integer> quantity, double total, int manager,OrderStatus status) {
         this.orderID = orderID;
         this.customer = customer;
         this.barcode = barcode;
@@ -77,18 +77,11 @@ public class Order implements Serializable {
         this.barcode = barcode;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
+    public List<Double> getPrice() {        return price;    }
+    public void setPrice(List<Double> price) {
         this.price = price;
     }
-
-    public List<Integer> getQuantity() {
-        return quantity;
-    }
-
+    public List<Integer> getQuantity() { return quantity; }
     public void setQuantity(List<Integer> quantity) {
         this.quantity = quantity;
     }

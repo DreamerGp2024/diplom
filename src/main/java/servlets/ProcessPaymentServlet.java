@@ -48,12 +48,19 @@ public class ProcessPaymentServlet extends HttpServlet {
             }
             Random random = new Random();
             int orderID = random.nextInt(Integer.MAX_VALUE);
+            double total=0;
             for (Cart cart : cartItems) {
                 ArrayList<String> list = new ArrayList<>();
                 list.add(cart.getBook().getBarcode());
-                ArrayList<Integer> list1 = new ArrayList<>();
-                list1.add(cart.getQuantity());
-                Order order = new Order( orderID,(Integer) req.getSession().getAttribute("userID"), list, cart.getBook().getPrice(), list1,cart.getBook().getPrice() * cart.getBook().getQuantity(),0,  OrderStatus.NEW  );
+                ArrayList<Double> list1 = new ArrayList<>();
+                list1.add(cart.getBook().getPrice());
+                ArrayList<Integer> list2 = new ArrayList<>();
+                list2.add(cart.getQuantity());
+
+                for (Double elements : list1)
+                    total += elements;
+
+                Order order = new Order( orderID,(Integer) req.getSession().getAttribute("userID"), list, list1,list2, total,0,  OrderStatus.NEW  );
                 orderService.addOrder(order);
                 Book book = cart.getBook();
                 double bPrice = book.getPrice();

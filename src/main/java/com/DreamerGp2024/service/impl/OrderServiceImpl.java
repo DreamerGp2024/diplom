@@ -55,14 +55,16 @@ public class OrderServiceImpl implements OrderService {
             while (rs.next()) {
                 ArrayList<String> list = new ArrayList<>();
                 list.add(rs.getString(3));
-                ArrayList<Integer> list1 = new ArrayList<>();
-                list1.add(rs.getInt(5));
+                ArrayList<Double> list1 = new ArrayList<>();
+                list1.add(rs.getDouble(4));
+                ArrayList<Integer> list2 = new ArrayList<>();
+                list2.add(rs.getInt(5));
                 order = new Order(
                         rs.getInt(1),
                         rs.getInt(2),
                         list,
-                        rs.getDouble(4),
                         list1,
+                        list2,
                         rs.getDouble(6),
                         rs.getInt(7),
                         getStatusByString(rs.getString(8))
@@ -85,9 +87,14 @@ public class OrderServiceImpl implements OrderService {
             while (rs.next()) {
                 ArrayList<String> list = new ArrayList<>();
                 list.add(rs.getString(3));
-                ArrayList<Integer> list1 = new ArrayList<>();
-                list1.add(rs.getInt(5));
-                orders.add(new Order(rs.getInt(1), rs.getInt(2), list, rs.getDouble(4), list1, rs.getDouble(6), rs.getInt(7), getStatusByString(rs.getString(8))
+                ArrayList<Double> list1 = new ArrayList<>();
+                list1.add(rs.getDouble(4));
+                ArrayList<Integer> list2 = new ArrayList<>();
+                list2.add(rs.getInt(5));
+                double total=0;
+                for (Double elements : list1)
+                    total += elements;
+                orders.add(new Order(rs.getInt(1), rs.getInt(2), list,  list1, list2, total,rs.getInt(7), getStatusByString(rs.getString(8))
                 ));
             }
         } catch (SQLException ignored) {
@@ -130,9 +137,9 @@ public class OrderServiceImpl implements OrderService {
             ps.setInt(1, order.getOrderID());
             ps.setInt(2, order.getCustomer());
             ps.setString(3, order.getBarcode().get(0));
-            ps.setDouble(4, order.getPrice());
+            ps.setDouble(4, order.getPrice().get(0));
             ps.setInt(5, order.getQuantity().get(0));
-            ps.setDouble(6, order.getTotal());
+            ps.setDouble(6, order.getPrice().get(0)*order.getQuantity().get(0));
             ps.setInt(7, order.getManager());
             ps.setString(8, order.getStatus().name());
             if (ps.executeUpdate() == 1) {

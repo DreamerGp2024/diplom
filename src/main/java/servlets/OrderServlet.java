@@ -49,17 +49,17 @@ public class OrderServlet extends HttpServlet {
             for (Integer orderID : orderIDs) {
                 List<String> barcodes = new ArrayList<>();
                 List<Integer> qtys = new ArrayList<>();
-                double total = 0.0;
+                List<Double> prices = new ArrayList<>();
                 for (Order order : orders) {
                     if (order.getOrderID() == orderID) {
                         barcodes.add(order.getBarcode().get(0));
                         qtys.add(order.getQuantity().get(0));
-                        total += order.getTotal();
+                        prices.add(order.getPrice().get(0));
                     }
                 }
                 for (Order order : orders) {
                     if (order.getOrderID() == orderID) {
-                        realOrders.add(new Order( order.getOrderID(),order.getCustomer(), barcodes, order.getPrice(), qtys, price, order.getManager(), order.getStatus() ));
+                        realOrders.add(new Order( order.getOrderID(),order.getCustomer(), barcodes, prices, qtys, order.getTotal(), order.getManager(), order.getStatus() ));
                         break;
                     }
                 }
@@ -93,8 +93,10 @@ public class OrderServlet extends HttpServlet {
                     + "  <thead>\r\n"
                     + "    <tr style='background-color:black; color:white;'>\r\n"
                     + "      <th scope=\"col\">OrderID</th>\r\n"
-                    + "      <th scope=\"col\">Customer</th>\r\n"
+                    + "      <th scope=\"col\">Customer Phone</th>\r\n"
                     + "      <th scope=\"col\">Books</th>\r\n"
+                    + "      <th scope=\"col\">Prices</th>\r\n"
+                    + "      <th scope=\"col\">Quantities</th>\r\n"
                     + "      <th scope=\"col\">Total</th>\r\n"
                     + "      <th scope=\"col\">Manager</th>\r\n"
                     + "      <th scope=\"col\">Status</th>\r\n"
@@ -123,18 +125,33 @@ public class OrderServlet extends HttpServlet {
 
 
     public String getRowData(Order order, int id) {
+
+
         String books = "";
         for (int i = 0; i < order.getBarcode().size(); i++) {
-            books += order.getBarcode().get(i) + " - " + order.getQuantity().get(i) + "pcs.<br>";
+            books += order.getBarcode().get(i) +"<br>";
         }
+        String prices = "";
+        for (int i = 0; i < order.getPrice().size(); i++) {
+            prices += order.getPrice().get(i) + "<br>";
+        }
+        String quants = "";
+        for (int i = 0; i < order.getQuantity().size(); i++) {
+            quants += order.getQuantity().get(i) + " pcs.<br>";
+        }
+        double total=order.getTotal();
+
         try {
-            return "    <tr>\r\n"
+            return
+                    "    <tr>\r\n"
                     + "      <th scope=\"row\">" + order.getOrderID() + "</th>\r\n"
-                    + "      <td>" + order.getStatus().name() + "</td>\r\n"
                     + "      <td>" + userService.getNameByUserID(order.getCustomer()) + "</td>\r\n"
                     + "      <td>" + books + "</td>\r\n"
-                    + "      <td>" + order.getPrice() + "</td>\r\n"
-                    + "      <td>" + userService.getNameByUserID(order.getManager()) + "</td>\r\n"
+                    + "      <td>" + prices + "</td>\r\n"
+                    + "      <td>" + quants + "</td>\r\n"
+                    + "      <td>" + total + "</td>\r\n"
+                    + "      <td>" + userService.getFIOByUserID(order.getManager()) + "</td>\r\n"
+                    + "      <td>" + order.getStatus().name() + "</td>\r\n"
                     + "      <td><form onsubmit=\"submitForm(event)\">"
                     + "          <input type='hidden' id='" + id +"' name='orderID' value='" + order.getOrderID() + "'/>"
                     + "          <button type='submit' id='" + id +"' class=\"btn btn-success\">"+ order.getStatus().toString() +"</button>"
