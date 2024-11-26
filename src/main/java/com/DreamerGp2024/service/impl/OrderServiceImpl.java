@@ -87,15 +87,7 @@ public class OrderServiceImpl implements OrderService {
                 list.add(rs.getString(3));
                 ArrayList<Integer> list1 = new ArrayList<>();
                 list1.add(rs.getInt(5));
-                orders.add(new Order(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        list,
-                        rs.getDouble(4),
-                        list1,
-                        rs.getDouble(6),
-                        rs.getInt(7),
-                        getStatusByString(rs.getString(8))
+                orders.add(new Order(rs.getInt(1), rs.getInt(2), list, rs.getDouble(4), list1, rs.getDouble(6), rs.getInt(7), getStatusByString(rs.getString(8))
                 ));
             }
         } catch (SQLException ignored) {

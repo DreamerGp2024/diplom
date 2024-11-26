@@ -49,26 +49,17 @@ public class OrderServlet extends HttpServlet {
             for (Integer orderID : orderIDs) {
                 List<String> barcodes = new ArrayList<>();
                 List<Integer> qtys = new ArrayList<>();
-                double price = 0.0;
+                double total = 0.0;
                 for (Order order : orders) {
                     if (order.getOrderID() == orderID) {
                         barcodes.add(order.getBarcode().get(0));
                         qtys.add(order.getQuantity().get(0));
-                        price += order.getTotal();
+                        total += order.getTotal();
                     }
                 }
                 for (Order order : orders) {
                     if (order.getOrderID() == orderID) {
-                        realOrders.add(new Order(
-                                order.getOrderID(),
-                                order.getCustomer(),
-                                barcodes,
-                                order.getPrice(),
-                                qtys,
-                                price,
-                                order.getManager(),
-                                order.getStatus()
-                        ));
+                        realOrders.add(new Order( order.getOrderID(),order.getCustomer(), barcodes, order.getPrice(), qtys, price, order.getManager(), order.getStatus() ));
                         break;
                     }
                 }
@@ -102,11 +93,11 @@ public class OrderServlet extends HttpServlet {
                     + "  <thead>\r\n"
                     + "    <tr style='background-color:black; color:white;'>\r\n"
                     + "      <th scope=\"col\">OrderID</th>\r\n"
-                    + "      <th scope=\"col\">Status</th>\r\n"
                     + "      <th scope=\"col\">Customer</th>\r\n"
                     + "      <th scope=\"col\">Books</th>\r\n"
-                    + "      <th scope=\"col\">Price</th>\r\n"
+                    + "      <th scope=\"col\">Total</th>\r\n"
                     + "      <th scope=\"col\">Manager</th>\r\n"
+                    + "      <th scope=\"col\">Status</th>\r\n"
                     + "      <th scope=\"col\">Action</th>\r\n"
                     + "    </tr>\r\n"
                     + "  </thead>\r\n"
