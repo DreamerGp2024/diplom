@@ -33,6 +33,6 @@ public class CommentsServlet extends HttpServlet {
 
         commentService.addComment(tempComment);
         response.setContentType("text/html");
-        response.getWriter().println("<h2>Thank you for your comment!</h2>");
+        response.getWriter().println("<div class=\"book-container\"><div class=\"book-card\"><h2>Thank you for your comment!</h2></div></div>");
     }
 }

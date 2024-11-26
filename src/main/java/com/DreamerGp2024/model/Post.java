@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class Post implements Serializable {
 
     private int postID;
-    private int author;
+    private String author;
     private Long time;
     private String header;
     private String body;
 
 
 
-    public Post(int postID, int author, Long time, String header, String body) {
+    public Post(int postID, String author, Long time, String header, String body) {
         this.postID = postID;
         this.author = author;
         this.time = time;
@@ -32,11 +32,11 @@ public class Post implements Serializable {
         this.postID = postID;
     }
 
-    public int getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(int author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 

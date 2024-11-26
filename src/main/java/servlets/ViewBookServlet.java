@@ -105,7 +105,7 @@ public class ViewBookServlet extends HttpServlet {
         }
 
         // Bootstrap card to show the book data
-        return "<div class=\"card\" style=\"height: 375px;\" >\r\n"
+        return "<div class=\"card\" style=\"height: 425px;\" >\r\n"
                 + "                <div class=\"row card-body\">\r\n"
                 + "                    <a style=\"display: inline-block; width: 50%;\" href=\"/onlinebookstore_war/bookDetailsServlet?id="+book.getBarcode()+"\">"
                 + "                        <img style=\"width: 100%;\" src=\"https://webserver.kmt.support/onlinebookstore/"+book.getBarcode()+".JPG\" alt=\"Card image cap\">\r\n"

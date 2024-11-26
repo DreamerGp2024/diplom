@@ -46,11 +46,11 @@ public class AddNewsServlet extends HttpServlet {
             HttpSession session = req.getSession();
             Random random = new Random();
             int postID = random.nextInt(Integer.MAX_VALUE);
-            int postAuthor = Integer.parseInt(session.getAttribute("userID").toString());
+            String postAuthorFIO = postService.getNewsFIOByUserID(Integer.parseInt(session.getAttribute("userID").toString()));
             postHeader = req.getParameter("postHeader");
             String postBody = req.getParameter("postBody");
 
-            Post post = new Post(postID, postAuthor, System.currentTimeMillis() / 1000L, postHeader, postBody);
+            Post post = new Post(postID, postAuthorFIO, System.currentTimeMillis() / 1000L, postHeader, postBody);
             postService.addPost(post);
         } catch (Exception e) {
             e.printStackTrace();

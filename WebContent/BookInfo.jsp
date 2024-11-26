@@ -134,9 +134,21 @@
             <p>DESCRIPTION: ${book.getDescriptionBook()}</p>
         </div>
     </div>
-
     <div class="book-container">
-
+        <div class="book-card">
+            <h2>Leave your comment about book</h2>
+            <form onsubmit="submitForm(event)">
+                <input type="hidden" id="book" name="book" value="${book.getBarcode()}">
+                <label for="title">Title:</label><br>
+                <input type="text" id="title" name="title" required><br><br>
+                <label for="comment">Comment:</label><br>
+                <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
+                <input type="submit" value="Send">
+            </form>
+        </div>
+    </div>
+    <div class="book-container">
+        <div class="book-card">
     <div id="response"></div>
     <%
         List<Comment> comments = (List<Comment>) request.getAttribute("comments");
@@ -144,24 +156,18 @@
             for (Comment item : comments) {
     %>
     <div>
-        <div class="news-header"><%= item.getHeader() %></div>
-        <div>Автор: <%= item.getAuthor() %></div>
+
+        <div><h4><%= item.getHeader() %></h4> </div>
+        <div class="news-header">Author: <%= item.getAuthor() %></div>
         <div><%= item.getBody() %></div>
     </div>
     <%
             }
         }
     %>
-        <h2>Оставьте ваш комментарий</h2>
-        <form onsubmit="submitForm(event)">
-            <input type="hidden" id="book" name="book" value="${book.getBarcode()}">
-            <label for="title">Тема:</label><br>
-            <input type="text" id="title" name="title" required><br><br>
-            <label for="comment">Комментарий:</label><br>
-            <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
-            <input type="submit" value="Отправить">
-        </form>
+        </div>
     </div>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js"></script>

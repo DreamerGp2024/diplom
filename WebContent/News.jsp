@@ -136,7 +136,7 @@
 %>
 <div class="news-card">
     <div class="news-header"><%= item.getHeader() %></div>
-    <div class="news-meta">Автор: <%= item.getAuthor() %> | Время: <%= item.getTime() %></div>
+    <div class="news-meta">Author: <%= item.getAuthor() %> | Date: <%= item.getTime() %></div>
     <div class="news-body"><%= item.getBody() %></div>
 </div>
 <%

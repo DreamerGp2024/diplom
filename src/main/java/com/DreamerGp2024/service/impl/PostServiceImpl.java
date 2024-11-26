@@ -1,7 +1,9 @@
 package com.DreamerGp2024.service.impl;
 
+import com.DreamerGp2024.constant.db.UsersDBConstants;
 import com.DreamerGp2024.model.Post;
 import com.DreamerGp2024.model.StoreException;
+import com.DreamerGp2024.service.PostService;
 import com.DreamerGp2024.util.DBUtil;
 
 import java.sql.Connection;
@@ -12,8 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.DreamerGp2024.constant.db.PostsDBConstants.*;
+import static com.DreamerGp2024.constant.db.UsersDBConstants.*;
 
-public class PostServiceImpl {
+public class PostServiceImpl implements PostService {
+
+
     public String addPost(Post post) throws StoreException {
         String result = null;
         Connection con = DBUtil.getConnection();
@@ -26,7 +31,7 @@ public class PostServiceImpl {
         try {
             PreparedStatement ps = con.prepareStatement(insertPostQuery);
             ps.setInt(1, post.getPostID());
-            ps.setInt(2, post.getAuthor());
+            ps.setString(2, post.getAuthor());
             ps.setLong(3, post.getTime());
             ps.setString(4, post.getHeader());
             ps.setString(5, post.getBody());
@@ -67,7 +72,7 @@ public class PostServiceImpl {
             while (rs.next()) {
                 Post post = new Post(
                         rs.getInt(COLUMN_POSTID),
-                        rs.getInt(COLUMN_AUTHOR),
+                        rs.getString(COLUMN_AUTHOR),
                         rs.getLong(COLUMN_TIME),
                         rs.getString(COLUMN_HEADER),
                         rs.getString(COLUMN_BODY)
@@ -78,6 +83,27 @@ public class PostServiceImpl {
 
         }
         return posts;
+    }
+    private static final String getUserNameByUserIDQuery = "SELECT * FROM " + UsersDBConstants.TABLE_USERS + " WHERE "
+            + COLUMN_USERID + "=?";
+    @Override
+    public String getNewsFIOByUserID(int userID) throws StoreException {
+        String fn = null;
+        String sn = null;
+        Connection con = DBUtil.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(getUserNameByUserIDQuery);
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                fn = rs.getString(COLUMN_FIRSTNAME);
+                sn = rs.getString(COLUMN_LASTNAME);
+            }
+        } catch (SQLException ignored) {
+
+        }
+        return fn + " " + sn;
     }
 }
 
